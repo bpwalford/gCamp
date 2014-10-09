@@ -2,7 +2,11 @@ Rails.application.routes.draw do
 
   root "pages#index"
 
-  get 'pages/2' => 'pages#index2'
+  get 'haml' => 'pages#index2'
+
+  get 'partial' => 'not#index'
+
+  get 'columns' => 'pages#index3'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

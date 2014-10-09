@@ -1,0 +1,3 @@
+class NotController < ApplicationController
+
+end
