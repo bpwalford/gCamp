@@ -4,7 +4,7 @@ Rails.application.routes.draw do
 
   get 'haml' => 'pages#index2'
 
-  get 'partial' => 'not#index'
+  get 'diffview' => 'not#index'
 
   get 'columns' => 'pages#index3'
 
