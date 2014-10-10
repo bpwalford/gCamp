@@ -10,6 +10,10 @@ Rails.application.routes.draw do
 
   get 'backimage' => 'pages#index4'
 
+  get 'hamlcol' => 'pages#index5'
+
+  get 'colhash' => 'pages#index6'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
