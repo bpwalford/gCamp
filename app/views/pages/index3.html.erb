@@ -1,3 +1,4 @@
+DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -33,25 +34,78 @@
 
   <body>
 
-  <%
-
-  foo = ["one", "two", "three", "four"]
-
-  %>
-
-    <div class="container">
-      <div class="row">
-        <% foo.each do |item| %>
-        <div class="col-md-3">
-          <h1>
-              <%=item%>
-          </h1>
+    <!-- fixed top navigation bar -->
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">gCamp</a>
         </div>
-        <%end%>
       </div>
     </div>
 
+    <!-- main page container -->
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1 content">
 
+        <!-- Jumbrotron row -->
+        <div class="row">
+          <div class="col-md-12">
+
+            <div class="container tron-top-buffer">
+              <div class="jumbotron" >
+                <h1>gCamp</h1>
+                <p>Your life, organized</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <!-- end of jumbotron -->
+
+        <%
+
+        panel_elements = [
+          ['https://farm3.staticflickr.com/2833/8865586006_c5ce2a79e6_n.jpg', 'Tasks', ['Grouped by projects and lists. Just the way you like \'em']],
+          ['https://farm4.staticflickr.com/3832/8865584540_b5307795be_n.jpg', 'Documents', ['Upload', 'Comment', 'Revise']],
+          ['https://farm4.staticflickr.com/3821/9232183203_859067da50_n.jpg', 'Comments', ['Comment on tasks and documents', 'Get email notifications']]
+        ]
+
+        %>
+
+        <!-- Panel container -->
+        <div class="container">
+          <div class="row">
+
+            <% panel_elements.each do |element| %>
+            <div class="col-md-4">
+              <div class="panel panel-default panel-image">
+                <div class="panel-body">
+                  <img class="panelImage" src=<%= element.first %> />
+                </div>
+              </div>
+
+              <div class="panel panel-primary panel-content">
+                <div class="panel-heading">
+                  <h4 class="panel-title"><%= element[1] %></h4>
+                </div>
+                <div class="panel-body">
+                  <ul>
+                    <% element[2].each do |item| %>
+                    <li><%= item %></li>
+                  <% end %>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <% end %>
+
+          </div>
+        </div>
+        <!-- end of panel container -->
+
+      </div>
+    </div>
+    <!-- end of container -->
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
