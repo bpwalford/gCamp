@@ -17,7 +17,13 @@
 @import "bootstrap";
 
 
+// global
+.images {
+    width: 100%;
+    height: 100%;
+}
 
+// home page
 .tron-top-buffer {
   margin-top: 80px;
 }
@@ -27,31 +33,27 @@
   border-color:orange;
 }
 
-.panel-image {
-  height: 251px;
-}
-
 .panel-content {
   height: 141px;
 }
 
-#index4 {
-  background: url(https://farm8.staticflickr.com/7304/10891456256_9e4fb825d2_h.jpg) no-repeat top center fixed;
+// about page
+
+.about-discription {
+  margin-top: 1%;
+  margin-bottom: 3%;
 }
 
-.index4-top-buffer {
-  margin-top: 100%;
-  margin-left: 13%;
+// terms page
+
+.terms-description {
+  margin-top: 3%;
 }
 
-.index4-panel-buffer {
-  margin-top: 15%;
+footer {
+  position: fixed;
+  bottom: 0;
 }
-
-
-
-
-
 
 
 

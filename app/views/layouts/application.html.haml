@@ -4,8 +4,11 @@
     %meta{:charset => "utf-8"}/
     %meta{:content => "IE=edge", "http-equiv" => "X-UA-Compatible"}/
     %meta{:content => "width=device-width, initial-scale=1", :name => "viewport"}/
-    %title Bootstrap 101 Template
+    %title gCamp
     %link{:href => "css/bootstrap.min.css", :rel => "stylesheet"}/
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
+    = javascript_include_tag 'application', 'data-turbolinks-track' => true
+    = csrf_meta_tags
 
 
 !!!
@@ -26,34 +29,14 @@
     .navbar.navbar-inverse.narbar-fixed-top{:role => "navigation"}
       .container
         .navbar-header
-          %a.navbar-brand gCamp
+          %a.navbar-brand= link_to "gCamp", :home
     -# main page container
     .row
       .col-md-10.col.col-md-offset-1.content
-        -# jumbotron row
-        .row
-          .col-md-12
-            .container
-              .jumbotron
-                %h1 gCamp
-                %p Your life, organized
-        -# panel container
-        .container
-          .row
+        =yield
 
-          -# third column
-          - @panel_elements.each do |element|
-            .col-md-4
-              .panel.panel-default.panel-image
-                .panel-body
-                  %img.panelImage=image_tag(element[:image])
-              .panel.panel-primary.panel-content
-                .panel-heading
-                  %h4.panel-title= element[:title]
-                .panel-body
-                  %ul
-                    - element[:content].each do |item|
-                      %li= item
-    %script{:src => "https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"}
-    %script{:src => "../../dist/js/bootstrap.min.js"}
-    %script{:src => "../../assets/js/ie10-viewport-bug-workaround.js"}
+        %hr
+        .footer
+          %p
+            =link_to "About", :aboutPage
+            =link_to "Terms", :termsPage

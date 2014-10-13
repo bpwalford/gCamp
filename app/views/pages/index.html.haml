@@ -1,0 +1,27 @@
+-# jumbotron row
+.row
+  .col-md-12
+    .container
+      .jumbotron
+        %h1 gCamp
+        %p Your life, organized
+-# panel container
+.container
+  .row
+
+  -# third column
+  - @panel_elements.each do |element|
+    .col-md-4
+      .panel.panel-default
+        .panel-body
+          %img=image_tag(element[:image], :class => 'images')
+      .panel.panel-primary.panel-content
+        .panel-heading
+          %h4.panel-title= element[:title]
+        .panel-body
+          %ul
+            - element[:content].each do |item|
+              %li= item
+    %script{:src => "https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"}
+    %script{:src => "../../dist/js/bootstrap.min.js"}
+    %script{:src => "../../assets/js/ie10-viewport-bug-workaround.js"}

@@ -1,18 +1,10 @@
 Rails.application.routes.draw do
 
-  root "pages#index"
+  root "pages#index", as: :home
 
-  get 'haml' => 'pages#index2'
+  get "about" => "about#index", as: :aboutPage
 
-  get 'diffview' => 'not#index'
-
-  get 'columns' => 'pages#index3'
-
-  get 'backimage' => 'pages#index4'
-
-  get 'hamlcol' => 'pages#index5'
-
-  get 'colhash' => 'pages#index6'
+  get "terms" => "terms#index", as: :termsPage
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
