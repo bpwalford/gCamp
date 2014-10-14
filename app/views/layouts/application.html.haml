@@ -1,35 +1,16 @@
 !!!
 %html{:lang => "en"}
   %head
-    %meta{:charset => "utf-8"}/
-    %meta{:content => "IE=edge", "http-equiv" => "X-UA-Compatible"}/
-    %meta{:content => "width=device-width, initial-scale=1", :name => "viewport"}/
     %title gCamp
-    %link{:href => "css/bootstrap.min.css", :rel => "stylesheet"}/
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
-
-
-!!!
-%html{:lang => "en"}
-  %head
-    %meta{:charset => "utf-8"}/
-    %meta{:content => "IE=edge", "http-equiv" => "X-UA-Compatible"}/
-    %meta{:content => "width=device-width, initial-scale=1", :name => "viewport"}/
-    %meta{:content => "", :name => "description"}/
-    %meta{:content => "", :name => "author"}/
-    %link{:href => "../../favicon.ico", :rel => "icon"}/
-    %title Jumbotron Template for Bootstrap
-    %link{:href => "bootstrap.min.css", :rel => "stylesheet"}/
-    %link{:href => "jumbotron.css", :rel => "stylesheet"}/
-    %script{:src => "../../assets/js/ie-emulation-modes-warning.js"}
 
   %body
     .navbar.navbar-inverse.narbar-fixed-top{:role => "navigation"}
       .container
         .navbar-header
-          %a.navbar-brand= link_to "gCamp", :home
+          = link_to "gCamp", :home, class: "navbar-brand"
     -# main page container
     .row
       .col-md-10.col.col-md-offset-1.content
@@ -37,6 +18,14 @@
 
         %hr
         .footer
-          %p
-            =link_to "About", :aboutPage
-            =link_to "Terms", :termsPage
+          -if @path == "/about"
+            %span About
+            %span|
+            %span=link_to "Terms", :termsPage
+          -elsif @path == "/terms"
+            %span=link_to "About", :aboutPage
+            %span|
+            %span Terms
+          -else
+            %span=link_to "About", :aboutPage
+            %span=link_to "Terms", :termsPage
