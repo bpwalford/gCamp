@@ -13,19 +13,23 @@
           = link_to "gCamp", :home, class: "navbar-brand"
     -# main page container
     .row
-      .col-md-10.col.col-md-offset-1.content
+      .col-md-10.col-md-offset-1
         =yield
 
-        %hr
-        .footer
-          -if @path == "/about"
-            %span About
-            %span|
-            %span=link_to "Terms", :termsPage
-          -elsif @path == "/terms"
-            %span=link_to "About", :aboutPage
-            %span|
-            %span Terms
-          -else
-            %span=link_to "About", :aboutPage
-            %span=link_to "Terms", :termsPage
+    .row
+      .container
+        .footer-content
+          %hr
+          .footer
+            -if @path == "/about"
+              %span About
+              %span|
+              %span=link_to "Terms", :termsPage
+            -elsif @path == "/terms"
+              %span=link_to "About", :aboutPage
+              %span|
+              %span Terms
+            -else
+              %span=link_to "About", :aboutPage
+              %span|
+              %span=link_to "Terms", :termsPage
