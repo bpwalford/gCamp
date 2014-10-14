@@ -17,6 +17,14 @@
 @import "bootstrap";
 
 
+.full {
+  background: url("https://www.ciroc.com/img/bg_gradient-noRepeat.jpg") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
 // home page
 .tron-top-buffer {
   margin-top: 80px;
@@ -65,13 +73,13 @@
 
 // footer
 
+hr {
+  border-top: solid 1px #777777;
+}
+
 .footer-content {
   height: 60px;
 }
-
-
-
-
 
 
 

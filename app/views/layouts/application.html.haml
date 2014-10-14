@@ -6,16 +6,20 @@
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
 
-  %body
+  %body.full
+
+    -# navigation bar
     .navbar.navbar-inverse.narbar-fixed-top{:role => "navigation"}
       .container
         .navbar-header
           = link_to "gCamp", :home, class: "navbar-brand"
-    -# main page container
+
+    -# content area
     .row
       .col-md-10.col-md-offset-1
         =yield
 
+    -# footer
     .row
       .container
         .footer-content
