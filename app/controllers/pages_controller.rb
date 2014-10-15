@@ -99,7 +99,7 @@ class PagesController < ApplicationController
     arnoldQuote = Quote.new("\"Failure is not an option. Everyon has to Succeed\"","- Arnold Schwarzenegger")
     steveQuote = Quote.new("\"Your time is limited, so don't waste it living someone else's life.\"","- Steve Jobs")
     papaQuote = Quote.new("\"Better Ingredients, Better Pizza\"","- Papa John")
-    
+
     @quotes = [
       [
       arnoldQuote.getQuote,
