@@ -23,15 +23,6 @@
         .footer-content
           %hr
           .footer
-            -if @path == "/about"
-              %span About
-              %span|
-              %span=link_to "Terms", :termsPage
-            -elsif @path == "/terms"
-              %span=link_to "About", :aboutPage
-              %span|
-              %span Terms
-            -else
-              %span=link_to "About", :aboutPage
-              %span|
-              %span=link_to "Terms", :termsPage
+            %p
+              =link_to_unless @path == "/about", "About |", :aboutPage
+              =link_to_unless @path == "/terms", "Terms |", :termsPage
