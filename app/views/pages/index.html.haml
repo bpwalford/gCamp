@@ -9,16 +9,16 @@
 - @panel_elements.each do |element|
   .col-md-4
     .panel.panel-default.panel-image
-      .panel-body=image_tag(element[:image], :class => 'img-responsive')
+      .panel-body=image_tag(element.first, :class => 'img-responsive')
     .panel.panel-primary.panel-content
       .panel-heading
-        %h4.panel-title= element[:title]
+        %h4.panel-title= element[1]
       .panel-body
-        - if element[:content].length == 1
-          %p= element[:content][0]
+        - if element.last.length == 1
+          %p= element.last[0]
         - else
           %ul
-            - element[:content].each do |item|
+            - element.last.each do |item|
               %li= item
 -# quotes
 .row
