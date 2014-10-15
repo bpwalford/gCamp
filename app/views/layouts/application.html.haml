@@ -12,7 +12,7 @@
     .navbar.navbar-inverse.narbar-fixed-top{:role => "navigation"}
       .container
         .navbar-header
-          = link_to "gCamp", :home, class: "navbar-brand"
+          = link_to "gCamp", home_path, class: "navbar-brand"
 
     -# page content
     .container
@@ -24,8 +24,8 @@
             %hr
             .footer
               %p
-                =link_to_unless_current( "About ", aboutPage_path)
+                =link_to_unless_current( "About", aboutPage_path)
                 |
-                =link_to_unless_current( "Terms ", termsPage_path)
+                =link_to_unless_current( "Terms", termsPage_path)
                 |
                 =link_to_unless_current( "FAQ", faqPage_path)
