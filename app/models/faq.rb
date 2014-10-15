@@ -1,15 +1,29 @@
 class Faq
 
-  def self.all
-    @@foo = YAML.load_file("#{Rails.root}/config/questions.yml").to_a
-    # ObjectSpace.each_object(self).to_a
-  end
+  include Comparable
+
+  @@sortedQuestions = nil
 
   attr_accessor :question, :answer
 
   def initialize(question, answer)
     self.question = question
     self.answer = answer
+  end
+
+  def self.all
+    # pulls data from yaml file and make it an array
+    @questions = YAML.load_file("#{Rails.root}/config/questions.yml").to_a
+    # sorts data by question in downcase alphabetical order
+    @questions.sort! {|x,y| x <=> y}
+
+    # used to put each object in an array
+    # ObjectSpace.each_object(self).to_a
+  end
+
+  # defines the <=> operator
+  def <=>(obj)
+    question.downcase <=> obj.question.downcase
   end
 
 end

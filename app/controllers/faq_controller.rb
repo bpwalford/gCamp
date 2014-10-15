@@ -6,6 +6,8 @@ class FaqController < ApplicationController
 
   def faq
 
+    @questions = Faq.all
+
     # if @@loaded == false
     #   @firstQuestion = Faq.new(
     #     'What is gCamp',
@@ -17,7 +19,7 @@ class FaqController < ApplicationController
     #     'How do I join gCamp?',
     #     'Right now, gCamp is still in production. So, there is not a sign up page open to the public yet! Your best option is to become super best friends with a gCamp developer. They can be found hanging around gSchool during the day and hitting the hottest clubs at night.'
     #   )
-    # 
+    #
     #   @thirdQuestion = Faq.new(
     #     'When will gCamp be finished?',
     #     'gCamp is a work in progress. That being said, it should be fully functional by December 2014. Functional, but our developers are going to continue to improve the site for the foreseeable future. Check in daily for new features and awesome functionality. It’s going to blow your mind. Organization is only (well, will only) be a click away. Amazing!'
@@ -40,8 +42,6 @@ class FaqController < ApplicationController
     #     thirdQuestion.getAnswer,
     #   ],
     # ]
-
-    @questions = Faq.all
 
   end
 
