@@ -1,34 +1,33 @@
-.container
-  -# jumbotron
-  .row
-    .col-md-12
-      .jumbotron
-        %h1 gCamp
-        %p Your life, organized
-  -# panels
-  .row
-  - @panel_elements.each do |element|
-    .col-md-4
-      .panel.panel-default.panel-image
-        .panel-body=image_tag(element[:image], :class => 'img-responsive')
-      .panel.panel-primary.panel-content
-        .panel-heading
-          %h4.panel-title= element[:title]
-        .panel-body
-          - if element[:content].length == 1
-            %p= element[:content][0]
-          - else
-            %ul
-              - element[:content].each do |item|
-                %li= item
-  -# quotes
-  .row
-    .col-md-12
-      .container
-        - @quotes.each do |quote|
-          %h4= quote.first
-          %h5.home-quote
-            %small= quote.last
+-# jumbotron
+.row
+  .col-md-12
+    .jumbotron
+      %h1 gCamp
+      %p Your life, organized
+-# panels
+.row
+- @panel_elements.each do |element|
+  .col-md-4
+    .panel.panel-default.panel-image
+      .panel-body=image_tag(element[:image], :class => 'img-responsive')
+    .panel.panel-primary.panel-content
+      .panel-heading
+        %h4.panel-title= element[:title]
+      .panel-body
+        - if element[:content].length == 1
+          %p= element[:content][0]
+        - else
+          %ul
+            - element[:content].each do |item|
+              %li= item
+-# quotes
+.row
+  .col-md-12
+    .container
+      - @quotes.each do |quote|
+        %h4= quote.first
+        %h5.home-quote
+          %small= quote.last
 
 %script{:src => "https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"}
 %script{:src => "../../dist/js/bootstrap.min.js"}

@@ -15,14 +15,15 @@
           = link_to "gCamp", :home, class: "navbar-brand"
 
     -# page content
-    =yield
-
-    -# footer
     .container
+      =yield
+
       .row
-        .footer-content
-          %hr
-          .footer
-            %p
-              =link_to_unless @path == "/about", "About |", :aboutPage
-              =link_to_unless @path == "/terms", "Terms |", :termsPage
+        .col-md-12.footer-content
+          .container
+            %hr
+            .footer
+              %p
+                =link_to_unless_current( "About ", aboutPage_path)
+                |
+                =link_to_unless_current( "Terms ", termsPage_path)
