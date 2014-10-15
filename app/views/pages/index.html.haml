@@ -15,9 +15,12 @@
         .panel-heading
           %h4.panel-title= element[:title]
         .panel-body
-          %ul
-            - element[:content].each do |item|
-              %li= item
+          - if element[:content].length == 1
+            %p= element[:content][0]
+          - else
+            %ul
+              - element[:content].each do |item|
+                %li= item
   -# quotes
   .row
     .col-md-12
