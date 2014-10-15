@@ -14,14 +14,12 @@
         .navbar-header
           = link_to "gCamp", :home, class: "navbar-brand"
 
-    -# content area
-    .row
-      .col-md-10.col-md-offset-1
-        =yield
+    -# page content
+    =yield
 
     -# footer
-    .row
-      .container
+    .container
+      .row
         .footer-content
           %hr
           .footer

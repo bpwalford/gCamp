@@ -1,13 +1,11 @@
--# jumbotron row
-.row
-  .col-md-12
-    .container
+.container
+  -# jumbotron
+  .row
+    .col-md-12
       .jumbotron
         %h1 gCamp
         %p Your life, organized
-
--# panels
-.container
+  -# panels
   .row
   - @panel_elements.each do |element|
     .col-md-4
@@ -20,14 +18,14 @@
           %ul
             - element[:content].each do |item|
               %li= item
--# quotes
-.container
+  -# quotes
   .row
     .col-md-12
-      - @quotes.each do |quote|
-        %h4= quote.first
-        %h5.home-quote
-          %small= quote.last
+      .container
+        - @quotes.each do |quote|
+          %h4= quote.first
+          %h5.home-quote
+            %small= quote.last
 
 %script{:src => "https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"}
 %script{:src => "../../dist/js/bootstrap.min.js"}
