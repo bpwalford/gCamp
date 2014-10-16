@@ -1,11 +1,11 @@
-.row
+.row.faq-content-buffer
   .col-md-12
     .container
       %h1 Frequently Asked Questions
+      -@questions.each do |item|
+        %h4.faq-top-question-buffer=link_to(item.question, faqPage_path( :anchor => item.identity))
 -@questions.each do |item|
-  .row
-    .container
-      .col-md-6
-        %h4.faq-question-buffer= item.question
-        %p= item.answer
+  .row.faq-question-buffer{:id => item.identity}
+    %h4= item.question
+    %p= item.answer
 .faq-content-buffer

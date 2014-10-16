@@ -4,11 +4,12 @@ class Faq
 
   @@sortedQuestions = nil
 
-  attr_accessor :question, :answer
+  attr_accessor :question, :answer, :identity
 
   def initialize(question, answer)
     self.question = question
     self.answer = answer
+    self.identity = identity
   end
 
   def self.all
