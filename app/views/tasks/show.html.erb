@@ -1,9 +1,11 @@
-<p id="notice"><%= notice %></p>
+<div class="container">
+  <p id="notice" class="alert alert-success col-md-12 text-center"><%= notice %></p>
 
-<p>
-  <strong>Desription:</strong>
-  <%= @task.desription %>
-</p>
+  <p>
+    <strong>Desription:</strong>
+    <%= @task.desription %>
+  </p>
 
-<%= link_to 'Edit', edit_task_path(@task) %> |
-<%= link_to 'Back', tasks_path %>
+  <%= link_to 'Edit', edit_task_path(@task) %> |
+  <%= link_to 'Back', tasks_path %>
+</div>
