@@ -1,13 +1,24 @@
-# require 'yaml'
-
 class FaqController < ApplicationController
-
-  @@loaded = false
 
   def faq
 
     @questions = Faq.all
 
+  end
+
+end
+
+
+
+
+
+
+
+
+
+
+
+  # @@loaded = false
     # if @@loaded == false
     #   @firstQuestion = Faq.new(
     #     'What is gCamp',
@@ -42,7 +53,3 @@ class FaqController < ApplicationController
     #     thirdQuestion.getAnswer,
     #   ],
     # ]
-
-  end
-
-end
