@@ -96,24 +96,24 @@ class PagesController < ApplicationController
     #   ],
     # ]
 
-    arnoldQuote = Quote.new("\"Failure is not an option. Everyon has to Succeed\"","- Arnold Schwarzenegger")
-    steveQuote = Quote.new("\"Your time is limited, so don't waste it living someone else's life.\"","- Steve Jobs")
-    papaQuote = Quote.new("\"Better Ingredients, Better Pizza\"","- Papa John")
+    arnoldQuote = Quote.new(quote: "\"Failure is not an option. Everyon has to Succeed\"",author:"- Arnold Schwarzenegger")
+    steveQuote = Quote.new(quote:"\"Your time is limited, so don't waste it living someone else's life.\"",author:"- Steve Jobs")
+    papaQuote = Quote.new(quote:"\"Better Ingredients, Better Pizza\"",author:"- Papa John")
 
     @quotes = [
       [
-      arnoldQuote.getQuote,
-      arnoldQuote.getAuthor,
+      arnoldQuote.quote,
+      arnoldQuote.author,
       ],
 
       [
-      steveQuote.getQuote,
-      steveQuote.getAuthor,
+      steveQuote.quote,
+      steveQuote.author,
       ],
 
       [
-      papaQuote.getQuote,
-      papaQuote.getAuthor,
+      papaQuote.quote,
+      papaQuote.author,
       ],
     ]
 
