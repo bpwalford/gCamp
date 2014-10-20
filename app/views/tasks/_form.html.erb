@@ -20,8 +20,8 @@
           <%= f.date_field :due_date, :class => "col-md-4" %>
       </div>
       <% if @onNew != true %>
-        <div class="field form-group row">
-          <div class="col-md-3 col-md-offset-2 complete">
+        <div class="field form-group">
+          <div class="col-md-offset-2">
             <%= f.check_box :complete %>
             <%= f.label :complete %>
           </div>
@@ -30,5 +30,4 @@
       <div class="actions form-group">
           <%= f.submit class: 'btn-primary col-md-2 col-md-offset-2'%>
       </div>
-    <!-- </div> -->
   <% end %>
