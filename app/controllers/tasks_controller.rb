@@ -70,6 +70,6 @@ class TasksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def task_params
-      params.require(:task).permit(:desription, :complete)
+      params.require(:task).permit(:desription, :complete, :due_date)
     end
 end
