@@ -11,10 +11,18 @@
       </div>
     <% end %>
 
-      <div class="field form-group">
+      <div class="field form-group row">
           <%= f.label :desription, :class => "col-md-2" %>
           <%= f.text_field :desription, :class => "col-md-4" %>
       </div>
+      <% if @onNew != true %>
+        <div class="field form-group row">
+          <div class="col-md-3 col-md-offset-2 complete">
+            <%= f.check_box :complete %>
+            <%= f.label :complete %>
+          </div>
+        </div>
+      <% end %>
       <div class="actions form-group">
           <%= f.submit class: 'btn-primary col-md-2 col-md-offset-2'%>
       </div>
