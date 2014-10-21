@@ -1,5 +1,7 @@
 <div class="container">
-  <p id="notice" class="alert alert-success col-md-12 text-center"><%= notice %></p>
+  <% if notice != nil%>
+    <p id="notice" class="alert alert-success col-md-12 text-center"><%= notice %></p>
+  <% end %>
 
   <p>
     <strong>Desription:</strong>
