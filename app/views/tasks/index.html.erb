@@ -22,16 +22,16 @@
             <div class="pull-left tasks-td-top-buffer"><%= task.desription %></div>
           </td>
           <td class="col-md-3">
-            <span>
+            <div class="tasks-td-top-buffer">
               <%= task.complete ? "True" : "False" %>
-            </span>
+            </div>
           </td>
           <td class="col-md-3">
-            <span>
+            <div class="tasks-td-top-buffer">
               <% if task.due_date != nil %>
                 <%= task.due_date.strftime('%m/%d/%y') %>
               <%end%>
-            </span>
+            </div>
           </td>
           <td class="col-md-3">
             <span class="pull-right">
