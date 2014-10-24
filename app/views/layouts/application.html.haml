@@ -2,8 +2,8 @@
 %html{:lang => "en"}
   %head
     %title gCamp
-    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
-    = javascript_include_tag 'application', 'data-turbolinks-track' => true
+    = stylesheet_link_tag    'application', media: 'all'
+    = javascript_include_tag 'application'
     = csrf_meta_tags
 
   %body.full
@@ -23,9 +23,21 @@
           .container
             %hr
             .footer
-              %p
+              %p.col-md-6
                 =link_to_unless_current( "About", aboutPage_path)
                 |
                 =link_to_unless_current( "Terms", termsPage_path)
                 |
                 =link_to_unless_current( "FAQ", faqPage_path)
+                |
+                =link_to_unless_current( "Tasks", tasks_path)
+              .col-md-6
+                .pull-right
+                  =link_to "https://github.com/bpwalford" do
+                    =image_tag("github.png", class: "footer-link-image")
+                  =link_to "https://twitter.com/bpwalford" do
+                    =image_tag("twitter.png", class: "footer-link-image")
+                  =link_to "https://www.linkedin.com/profile/view?id=375930947&trk=nav_responsive_tab_profile_pic" do
+                    =image_tag("linked_in.png", class: "footer-link-image")
+                  =link_to "http://www.galvanize.it/school/#main" do
+                    =image_tag("gschool.png", class: "footer-link-image2")
