@@ -10,7 +10,7 @@ class TasksController < ApplicationController
       if params[:tableSort] == "description"
         @tasks = Task.order(:desription)
       elsif params[:tableSort] == "complete"
-        @tasks = Task.where(complete: false)
+        @tasks = Task.order(:complete)
       elsif params[:tableSort] == "due_date"
         @tasks = Task.order(:due_date)
       else
