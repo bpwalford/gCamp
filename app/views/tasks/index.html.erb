@@ -26,6 +26,11 @@
     <tbody>
       <% @tasks.each do |task| %>
         <tr>
+          <% if task.complete == nil %>
+          <h1>nil</h1>
+          <% elsif task.complete == false %>
+          <h1>false</h1>
+          <% end %>
           <td class="col-md-3">
             <div class="pull-left tasks-td-top-buffer"><%= task.desription %></div>
           </td>
