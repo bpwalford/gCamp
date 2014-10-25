@@ -6,10 +6,36 @@ class TasksController < ApplicationController
   def index
 
     if params[:sort] == "all"
-      @tasks = Task.all
+
+      if params[:tableSort] == "description"
+        @tasks = Task.order(:desription)
+      elsif params[:tableSort] == "complete"
+        @tasks = Task.where(complete: false)
+      elsif params[:tableSort] == "due_date"
+        @tasks = Task.order(:due_date)
+      else
+        @tasks = Task.all
+      end
+
     else
-      @tasks = Task.where(complete: nil)
+
+      if params[:tableSort] == "description"
+        @tasks = Task.where(complete: false)
+        @tasks = @tasks.order(:desription)
+      elsif params[:tableSort] == "complete"
+        @tasks = Task.where(complete: false)
+      elsif params[:tableSort] == "due_date"
+        @tasks = Task.where(complete: false)
+        @tasks = @tasks.order(:due_date)
+      else
+        @tasks = Task.where(complete: false)
+      end
+
     end
+
+
+
+    # @tasks = Tasks.order(params[:tableSort])
 
   end
 

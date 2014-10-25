@@ -5,7 +5,7 @@
     <div class="col-md-2 tasks-sort-links">
       <%= link_to_unless params[:sort] == "all", 'All', tasks_path(sort: :all) %>
       |
-      <%= link_to_unless !params[:sort], 'Incomplete', tasks_path(sort: :incomplete) %>
+      <%= link_to_unless !params[:sort] || params[:sort] == "incomplete", 'Incomplete', tasks_path(sort: :incomplete) %>
     </div>
     <div class="col-md-1 tasks-create-button">
       <%= link_to 'Create Task', new_task_path, class: "btn btn-info pull-right" %>
@@ -15,16 +15,16 @@
 
   <table class="table">
     <thead>
+
       <tr>
-        <th>Desription</th>
-        <th>Complete</th>
-        <th>Due</th>
+        <th><%= sortable("description") %></th>
+        <th><%= sortable("complete") %></th>
+        <th><%= sortable("due_date") %></th>
       </tr>
     </thead>
 
     <tbody>
-      <% sorted = @tasks.order(:due_date) %>
-      <% sorted.each do |task| %>
+      <% @tasks.each do |task| %>
         <tr>
           <td class="col-md-3">
             <div class="pull-left tasks-td-top-buffer"><%= task.desription %></div>
