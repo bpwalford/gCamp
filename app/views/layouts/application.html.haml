@@ -16,6 +16,9 @@
 
     -# page content
     .container
+      .container
+        - if notice != nil
+          %p#notice.alert.alert-success.col-md-12.text-center=notice
       =yield
 
       .row

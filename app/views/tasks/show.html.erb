@@ -1,11 +1,16 @@
 <div class="container">
-  <% if notice != nil%>
-    <p id="notice" class="alert alert-success col-md-12 text-center"><%= notice %></p>
-  <% end %>
+
+  <%=
+    crumbs([
+            {:name => "Tasks", :link => "/tasks"},
+            {:name => @task.description, :link => "active"}
+          ])
+
+   %>
 
   <p>
-    <strong>Desription:</strong>
-    <%= @task.desription %>
+    <strong>Description:</strong>
+    <%= @task.description %>
   </p>
   <p>
     <strong>Due:</strong>

@@ -6,36 +6,10 @@ class TasksController < ApplicationController
   def index
 
     if params[:sort] == "all"
-
-      if params[:tableSort] == "description"
-        @tasks = Task.order(:desription)
-      elsif params[:tableSort] == "complete"
-        @tasks = Task.order(:complete)
-      elsif params[:tableSort] == "due_date"
-        @tasks = Task.order(:due_date)
-      else
-        @tasks = Task.all
-      end
-
+      @tasks = Task.order(params[:tableSort])
     else
-
-      if params[:tableSort] == "description"
-        @tasks = Task.where(complete: false)
-        @tasks = @tasks.order(:desription)
-      elsif params[:tableSort] == "complete"
-        @tasks = Task.where(complete: false)
-      elsif params[:tableSort] == "due_date"
-        @tasks = Task.where(complete: false)
-        @tasks = @tasks.order(:due_date)
-      else
-        @tasks = Task.where(complete: false)
-      end
-
+      @tasks = Task.where(complete: false).order(params[:tableSort])
     end
-
-
-
-    # @tasks = Tasks.order(params[:tableSort])
 
   end
 
@@ -47,7 +21,6 @@ class TasksController < ApplicationController
   # GET /tasks/new
   def new
     @task = Task.new
-    @onNew = true
   end
 
   # GET /tasks/1/edit
@@ -102,6 +75,6 @@ class TasksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def task_params
-      params.require(:task).permit(:desription, :complete, :due_date)
+      params.require(:task).permit(:description, :complete, :due_date)
     end
 end

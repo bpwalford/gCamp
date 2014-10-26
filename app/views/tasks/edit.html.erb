@@ -1,4 +1,14 @@
 <class="container">
+
+  <%=
+    crumbs([
+            {:name => "Tasks", :link => "/tasks"},
+            {:name => @task.description, :link => "/tasks/#{@task.id}"},
+            {:name => "Edit", :link => "active"}
+          ])
+
+   %>
+
   <h1>Editing task</h1>
 
   <%= render 'form' %>
