@@ -11,6 +11,11 @@ class TasksController < ApplicationController
       @tasks = Task.where(complete: false).order(params[:tableSort])
     end
 
+    @tasksCsv = Task.all
+    respond_to do |format|
+      format.csv { send_data @tasksCsv.to_csv }
+    end
+
   end
 
   # GET /tasks/1

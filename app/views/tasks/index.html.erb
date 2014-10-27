@@ -1,13 +1,14 @@
 <div class="container">
 
   <div class="page-header row">
-    <h1 class="col-md-9">Tasks</h1>
+    <h1 class="col-md-7">Tasks</h1>
     <div class="col-md-2 tasks-sort-links">
       <%= link_to_unless params[:sort] == "all", 'All', tasks_path(sort: :all) %>
       |
       <%= link_to_unless !params[:sort] || params[:sort] == "incomplete", 'Incomplete', tasks_path(sort: :incomplete) %>
     </div>
-    <div class="col-md-1 tasks-create-button">
+    <div class="col-md-3 tasks-create-button">
+      <%= link_to 'Download CSV', tasks_path(format: "csv"), class: "btn btn-info" %>
       <%= link_to 'Create Task', new_task_path, class: "btn btn-info pull-right" %>
     </div>
   </div>
