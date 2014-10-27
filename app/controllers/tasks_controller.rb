@@ -13,6 +13,7 @@ class TasksController < ApplicationController
 
     @tasksCsv = Task.all
     respond_to do |format|
+      format.html
       format.csv { send_data @tasksCsv.to_csv }
     end
 
