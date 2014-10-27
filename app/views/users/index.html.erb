@@ -8,22 +8,22 @@
   </div>
   <th colspan="3"></th>
 
-  <table class="table" style="margin-right:auto;margin-left:0px">
+  <table class="table">
     <thead>
 
       <tr>
-        <th class="col-md-3">Name</th>
-        <th class="col-md-3">Email</th>
+        <th class="col-md-2">Name</th>
+        <th class="col-md-10">Email</th>
       </tr>
     </thead>
 
     <tbody>
       <% @users.each do |user| %>
         <tr>
-          <td class="col-md-3">
+          <td>
             <div class="pull-left tasks-td-top-buffer"><%= user.first_name + ' ' + user.last_name %></div>
           </td>
-          <td class="col-md-3">
+          <td>
             <div class="tasks-td-top-buffer pull-left">
               <%= mail_to user.email %>
             </div>
