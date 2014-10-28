@@ -23,17 +23,14 @@ class TasksController < ApplicationController
 
     @task = Task.find(params[:currentId])
 
-    puts params[:currentSort]
-    puts params[:currentTableSort]
-
     if @task.complete == false
       @task.complete = true
       @task.save
-      redirect_to tasks_path(sort: params[:currentSort], tableSort: params[:currentTableSort]), notice: 'Task was successfully updataed'
+      redirect_to tasks_path(sort: params[:currentSort], tableSort: params[:currentTableSort]), notice: 'Task was successfully updated'
     elsif @task.complete == true
       @task.complete = false
       @task.save
-      redirect_to tasks_path(sort: params[:currentSort], tableSort: params[:currentTableSort]), notice: 'Task was successfully updataed'
+      redirect_to tasks_path(sort: params[:currentSort], tableSort: params[:currentTableSort]), notice: 'Task was successfully updated'
     end
 
   end

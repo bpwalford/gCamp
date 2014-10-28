@@ -10,6 +10,7 @@ module TasksHelper
 
   end
 
+
   def task_true_false(task, sort, table_sort)
 
     if task.complete == false
@@ -31,5 +32,6 @@ module TasksHelper
     end
 
   end
+  
 
 end
