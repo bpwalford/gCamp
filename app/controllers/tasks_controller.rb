@@ -19,6 +19,25 @@ class TasksController < ApplicationController
 
   end
 
+  def toggleCompletion
+
+    @task = Task.find(params[:currentId])
+
+    puts params[:currentSort]
+    puts params[:currentTableSort]
+
+    if @task.complete == false
+      @task.complete = true
+      @task.save
+      redirect_to tasks_path(sort: params[:currentSort], tableSort: params[:currentTableSort]), notice: 'Task was successfully updataed'
+    elsif @task.complete == true
+      @task.complete = false
+      @task.save
+      redirect_to tasks_path(sort: params[:currentSort], tableSort: params[:currentTableSort]), notice: 'Task was successfully updataed'
+    end
+
+  end
+
   # GET /tasks/1
   # GET /tasks/1.json
   def show
