@@ -27,9 +27,9 @@
             <div class="tasks-td-top-buffer pull-left">
               <%= mail_to user.email %>
             </div>
-          </td>
-          <td>
-            <%= link_to "edit", edit_user_path(user) %>
+            <div>
+              <%= link_to "edit", edit_user_path(user), class: "pull-right" %>
+            </div>
           </td>
         </tr>
       <% end %>
