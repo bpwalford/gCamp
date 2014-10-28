@@ -28,6 +28,9 @@
               <%= mail_to user.email %>
             </div>
           </td>
+          <td>
+            <%= link_to "edit", edit_user_path(user) %>
+          </td>
         </tr>
       <% end %>
     </tbody>
