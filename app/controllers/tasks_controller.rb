@@ -26,11 +26,11 @@ class TasksController < ApplicationController
     if @task.complete == false
       @task.complete = true
       @task.save
-      redirect_to tasks_path(sort: params[:sort], tableSort: params[:tableSort]), notice: 'Task was successfully updated'
+      redirect_to tasks_path(sort: params[:sort], tableSort: params[:tableSort])
     elsif @task.complete == true
       @task.complete = false
       @task.save
-      redirect_to tasks_path(sort: params[:sort], tableSort: params[:tableSort]), notice: 'Task was successfully updated'
+      redirect_to tasks_path(sort: params[:sort], tableSort: params[:tableSort])
     end
 
   end
