@@ -1,0 +1,27 @@
+<div class="container">
+
+  <div class="page-header row">
+    <h1 class="col-md-11"><%= @user.full_name %></h1>
+    <div class="col-md-1 tasks-create-button">
+      <%= link_to 'Edit', edit_user_path(@user), class: "btn btn-info pull-right" %>
+    </div>
+  </div>
+
+<div>
+
+  <div class="row">
+  <p class="col-md-2 user-info"><strong>First Name</strong></p>
+    <p class="col-md-2"><%= @user.first_name %></p>
+  </div>
+
+  <div class="row">
+  <p class="col-md-2 user-info"><strong>Last Name</strong></p>
+    <p class="col-md-2"><%= @user.last_name %></p>
+  </div>
+
+  <div class="row">
+  <p class="col-md-2 user-info"><strong>Email</strong></p>
+    <p class="col-md-2"><%= mail_to @user.email %></p>
+  </div>
+
+</div>
