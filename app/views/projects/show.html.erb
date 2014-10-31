@@ -1,0 +1,9 @@
+<div class="container page-top-buffer">
+
+  <div class="page-header row">
+    <h1 class="col-md-9"><%= @project.name %></h1>
+    <div class="col-md-3 tasks-create-button">
+      <%= link_to 'Edit', edit_project_path(@project), class: "btn btn-info pull-right" %>
+      <%= link_to 'Destroy', project_path(@project), class: "btn btn-danger pull-right", method: :delete %>
+    </div>
+  </div>

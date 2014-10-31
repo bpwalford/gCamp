@@ -26,7 +26,7 @@ end
 end
 
 
-10.time do
+10.times do
 
   Project.create name: Faker::App.name
 
