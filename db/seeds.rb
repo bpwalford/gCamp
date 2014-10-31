@@ -24,3 +24,10 @@ end
               email: Faker::Internet.email
 
 end
+
+
+10.time do
+
+  Project.create name: Faker::App.name
+
+end
