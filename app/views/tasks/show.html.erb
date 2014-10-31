@@ -14,7 +14,7 @@
   </p>
   <p>
     <strong>Due:</strong>
-    <%= @task.due_date %>
+    <%= @task.due_date.strftime('%m/%d/%y') %>
   </p>
   <p>
     <strong>Complete:</strong>
