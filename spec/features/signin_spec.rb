@@ -32,7 +32,25 @@ feature "Sign In" do
     click_on "Sign Out"
     expect(page).to have_no_content "test@example.com"
     expect(page).to have_content "Sign In"
-    
+
+  end
+
+  scenario "user attempts to sign in with invalid info" do
+
+    # begin at home page
+    visit home_path
+
+    # sign in with invalid in
+    click_on "Sign In"
+    fill_in "Email", with: "test@example.com"
+    fill_in "Password", with: "1234"
+    within(".well") do
+      click_on "Sign In"
+    end
+
+    # verify user was not signed in
+    expect(page).to have_content("Username / password combination invalid")
+
   end
 
 end

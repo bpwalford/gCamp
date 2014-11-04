@@ -74,4 +74,34 @@ feature "Sign In" do
 
   end
 
+  scenario "user registers with already existing email" do
+
+    # create user with email
+    User.create!(
+      first_name: "test",
+      last_name: "testing",
+      email: "test@example.com",
+      password: "1234",
+      password_confirmation: "1234"
+    )
+
+    # begin at home page
+    visit home_path
+
+    # user registers with existing email
+    click_on "Sign Up"
+    fill_in "First name", with: "test"
+    fill_in "Last name", with: "testing"
+    fill_in "Email", with: "test@example.com"
+    fill_in "Password", with: "1234"
+    fill_in "Password confirmation", with: "1234"
+    within('.well') do
+      click_on "Sign Up"
+    end
+
+    # verify error message
+    expect(page).to have_content("Email has already been taken")
+
+  end
+
 end
