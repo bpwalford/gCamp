@@ -8,6 +8,7 @@
 
 Task.delete_all
 User.delete_all
+Project.delete_all
 
 20.times do
 
