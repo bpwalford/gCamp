@@ -17,31 +17,32 @@
 
     <div class="field form-group">
       <%= f.label :first_name %>
-      <%= f.text_field :first_name, class: "col-md-12" %>
+      <%= f.text_field :first_name, class: "col-md-12 form-control" %>
     </div>
 
     <div class="field form-group">
       <%= f.label :last_name %>
-      <%= f.text_field :last_name, class: "col-md-12" %>
+      <%= f.text_field :last_name, class: "col-md-12 form-control" %>
     </div>
 
     <div class="field form-group">
       <%= f.label :email %>
-      <%= f.email_field :email, class: "col-md-12" %>
+      <%= f.email_field :email, class: "col-md-12 form-control" %>
     </div>
 
     <div class="field form-group">
       <%= f.label :password %>
-      <%= f.password_field :password, class: "col-md-12" %>
+      <%= f.password_field :password, class: "col-md-12 form-control" %>
     </div>
 
     <div class="field form-group">
       <%= f.label :password_confirmation %>
-      <%= f.password_field :password_confirmation, class: "col-md-12" %>
+      <%= f.password_field :password_confirmation, class: "col-md-12 form-control" %>
     </div>
 
     <br>
-    
+    <br>
+
     <div class="actions form-group">
       <%= f.submit "Sign Up", class: "btn btn-primary" %>
     </div>
