@@ -1,4 +1,5 @@
 <%= form_for(@user, :html => {:class => 'form-horizontal'}) do |f| %>
+
   <% if @user.errors.any? %>
     <div class="alert alert-danger">
       <ul>
@@ -9,28 +10,29 @@
     </div>
   <% end %>
 
-    <div class="field form-group row">
-        <%= f.label :first_name, :class => "col-md-2" %>
-        <%= f.text_field :first_name, :class => "col-md-4" %>
-    </div>
-    <div class="field form-group row">
-        <%= f.label :last_name, :class => "col-md-2" %>
-        <%= f.text_field :last_name, :class => "col-md-4" %>
-    </div>
-    <div class="field form-group row">
-        <%= f.label :email, :class => "col-md-2" %>
-        <%= f.email_field :email, :class => "col-md-4" %>
-    </div>
-    <div class="field form-group row">
-        <%= f.label :password, :class => "col-md-2" %>
-        <%= f.password_field :password, :class => "col-md-4" %>
-    </div>
-    <div class="field form-group row">
-        <%= f.label :password_confirmation, :class => "col-md-2" %>
-        <%= f.password_field :password_confirmation, :class => "col-md-4" %>
-    </div>
+  <div class="field form-group row">
+      <%= f.label :first_name, :class => "col-md-2" %>
+      <%= f.text_field :first_name, :class => "col-md-4" %>
+  </div>
+  <div class="field form-group row">
+      <%= f.label :last_name, :class => "col-md-2" %>
+      <%= f.text_field :last_name, :class => "col-md-4" %>
+  </div>
+  <div class="field form-group row">
+      <%= f.label :email, :class => "col-md-2" %>
+      <%= f.email_field :email, :class => "col-md-4" %>
+  </div>
+  <div class="field form-group row">
+      <%= f.label :password, :class => "col-md-2" %>
+      <%= f.password_field :password, :class => "col-md-4" %>
+  </div>
+  <div class="field form-group row">
+      <%= f.label :password_confirmation, :class => "col-md-2" %>
+      <%= f.password_field :password_confirmation, :class => "col-md-4" %>
+  </div>
 
-    <div class="actions form-group">
-        <%= f.submit class: 'btn btn-primary col-md-2 col-md-offset-2'%>
-    </div>
+  <div class="actions form-group">
+      <%= f.submit class: 'btn btn-primary col-md-2 col-md-offset-2'%>
+  </div>
+  
 <% end %>
