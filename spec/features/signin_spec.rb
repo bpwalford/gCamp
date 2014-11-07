@@ -53,4 +53,32 @@ feature "Sign In" do
 
   end
 
+  scenario "user signed in but email has capital letters" do
+
+    # create user to sign in with
+    User.create!(
+      first_name: "test",
+      last_name: "testing",
+      email: "test@example.com",
+      password: "1234",
+      password_confirmation: "1234"
+    )
+
+    # begin at home page
+    visit home_path
+
+    # user logs in
+    click_on "Sign In"
+    fill_in "Email", with: "TeSt@ExAmPlE.cOm"
+    fill_in "Password", with: "1234"
+    within(".well") do
+      click_on "Sign In"
+    end
+
+    # user is logged in
+    expect(page).to have_content "test testing"
+    expect(page).to have_no_content "Sign In"
+
+  end
+
 end
