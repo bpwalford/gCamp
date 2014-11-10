@@ -11,18 +11,18 @@ feature "tasks" do
     click_on "Tasks"
     click_on "Create Task"
     fill_in "Description", with: "testing"
-    fill_in "Due date", with: "01-01-2012"
+    fill_in "Due date", with: "01-01-2999"
     click_on "Create Task"
 
     # verify task and attributes exist on show and index
     expect(page).to have_content("Task was successfully created.")
     expect(page).to have_content("Description: testing")
-    expect(page).to have_content("Due: 01/01/12")
+    expect(page).to have_content("01/01/99")
     expect(page).to have_content("Complete: false")
     click_on "Back"
     expect(page).to have_no_content("Task was successfully created.")
     expect(page).to have_content("testing")
-    expect(page).to have_content("01/01/12")
+    expect(page).to have_content("01/01/99")
 
     # edit task
     click_on "Edit"
@@ -49,6 +49,61 @@ feature "tasks" do
     expect(page).to have_no_content("different")
     expect(page).to have_no_content("01/01/13")
 
+
+  end
+
+  scenario "user creates invalid task" do
+
+    # begin at home page
+    visit home_path
+
+    # attempt to create task
+    click_on "Tasks"
+    click_on "Create Task"
+    click_on "Create Task"
+
+    # expect error messages
+    expect(page).to have_content("Description can't be blank")
+    expect(page).to have_content("Due date can't be blank")
+
+  end
+
+  scenario "user creates task due in past" do
+
+    # begin at home page
+    visit home_path
+
+    # attempt to create task
+    click_on "Tasks"
+    click_on "Create Task"
+    fill_in "Description", with: "test"
+    fill_in "Due date", with: "01/01/2000"
+    click_on "Create Task"
+
+    # expect error messages
+    expect(page).to have_content("Due date can't be in the past")
+
+  end
+
+  scenario "update user with due date in past" do
+
+    # create test task
+    Task.create!(
+      description: "test",
+      due_date: Date.today
+    )
+
+    # begin on home page
+    visit home_path
+
+    # update task
+    click_on "Tasks"
+    click_on "Edit"
+    fill_in "Due date", with: "01-01-2000"
+    click_on "Update Task"
+
+    # expect success message
+    expect(page).to have_content("Task was successfully updated")
 
   end
 

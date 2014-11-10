@@ -1,11 +1,14 @@
   <%= form_for(@task, :html => {:class => 'form-horizontal'}) do |f| %>
+
     <% if @task.errors.any? %>
-      <div class="alert alert-danger">
-        <ul>
-        <% @task.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-        </ul>
+      <div class="row">
+        <div class="alert alert-danger col-md-6 col-md-offset-2">
+          <ul>
+          <% @task.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+          </ul>
+        </div>
       </div>
     <% end %>
 

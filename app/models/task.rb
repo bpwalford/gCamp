@@ -2,6 +2,14 @@ class Task < ActiveRecord::Base
 
   validates :description, presence: true
   validates :due_date, presence: true
+  validate :cant_be_due_in_past, on: :create
+
+
+  def cant_be_due_in_past
+    if due_date.present? && due_date < Date.today
+      errors.add(:due_date, "can't be in the past")
+    end
+  end
 
   def due_soon
     Date.today >= self.due_date - 7.days ? true : false

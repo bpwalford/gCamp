@@ -1,12 +1,14 @@
 <%= form_for(@user, :html => {:class => 'form-horizontal'}) do |f| %>
 
   <% if @user.errors.any? %>
-    <div class="alert alert-danger">
-      <ul>
-      <% @user.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+    <div class="row">
+      <div class="alert alert-danger col-md-6 col-md-offset-2">
+        <ul>
+        <% @user.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
     </div>
   <% end %>
 
@@ -34,5 +36,5 @@
   <div class="actions form-group">
       <%= f.submit class: 'btn btn-primary col-md-2 col-md-offset-2'%>
   </div>
-  
+
 <% end %>

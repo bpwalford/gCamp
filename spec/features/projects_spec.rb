@@ -45,4 +45,19 @@ feature "Projects" do
 
   end
 
+  scenario "attempt to create invalid project" do
+
+    # begin on home page
+    visit home_path
+
+    # create invalid project
+    click_on "Projects"
+    click_on "Create Project"
+    click_on "Create Project"
+
+    # expect error message
+    expect(page).to have_content("Name can't be blank")
+
+  end
+
 end
