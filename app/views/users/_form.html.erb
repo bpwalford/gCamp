@@ -1,16 +1,6 @@
 <%= form_for(@user, :html => {:class => 'form-horizontal'}) do |f| %>
 
-  <% if @user.errors.any? %>
-    <div class="row">
-      <div class="alert alert-danger col-md-6 col-md-offset-2">
-        <ul>
-        <% @user.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-        </ul>
-      </div>
-    </div>
-  <% end %>
+  <%= render 'shared/errors', model: @user %>
 
   <div class="field form-group row">
       <%= f.label :first_name, :class => "col-md-2" %>
