@@ -2,8 +2,8 @@
 
   <%=
     crumbs([
-            {:name => "Tasks", :link => "/tasks"},
-            {:name => @task.description, :link => "/tasks/#{@task.id}"},
+            {:name => "#{@project.name}", :link => "/projects/#{@project.id}"},
+            {:name => @task.description, :link => "/projects/#{@project.id}/tasks/#{@task.id}"},
             {:name => "Edit", :link => "active"}
           ])
 
@@ -13,6 +13,6 @@
 
   <%= render 'form' %>
 
-  <%= link_to 'Show', @task %> |
-  <%= link_to 'Back', tasks_path %>
+  <%= link_to 'Show', project_task_path(@project, @task) %> |
+  <%= link_to 'Back', project_tasks_path %>
 </div>

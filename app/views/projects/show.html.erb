@@ -3,12 +3,30 @@
 
     <h1 class="col-md-9"><%= @project.name %></h1>
 
-    <div class="col-md-2 tasks-create-button pull-right">
+    <div class="col-md-3 tasks-create-button pull-right">
       <span class="pull-right">
         <%= link_to 'Edit', edit_project_path(@project), class: "btn btn-info" %>
         <%= link_to 'Destroy', project_path, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger"%>
       </span>
     </div>
 
+    <div class="container">
+      <%=
+        crumbs([
+                {:name => "Projects", :link => "/projects"},
+                {:name => "#{@project.name}", :link => "active"}
+              ])
+       %>
+    </div>
+
   </div>
+
+  <div>
+    <% if @project.tasks.length == 1 %>
+      <%= link_to "1 Task", project_tasks_path(@project) %>
+    <% else %>
+      <%= link_to @project.tasks.length.to_s + " Tasks", project_tasks_path(@project) %>
+    <% end %>
+  </div>
+
 </div>

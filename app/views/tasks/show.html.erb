@@ -2,7 +2,7 @@
 
   <%=
     crumbs([
-            {:name => "Tasks", :link => "/tasks"},
+            {:name => "#{@project.name}", :link => "/projects/#{@project.id}"},
             {:name => @task.description, :link => "active"}
           ])
 
@@ -22,6 +22,6 @@
   </p>
 
 
-  <%= link_to 'Edit', edit_task_path(@task) %> |
-  <%= link_to 'Back', tasks_path %>
+  <%= link_to 'Edit', edit_project_task_path(@project, @task) %> |
+  <%= link_to 'Back', project_tasks_path %>
 </div>

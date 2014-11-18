@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(version: 20141118153750) do
     t.datetime "updated_at"
     t.boolean  "complete",    default: false
     t.date     "due_date"
-    t.integer  "projects_id"
+    t.integer  "project_id"
   end
 
   create_table "users", force: true do |t|

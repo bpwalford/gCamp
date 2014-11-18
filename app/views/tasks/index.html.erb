@@ -3,18 +3,26 @@
   <div class="page-header row">
     <h1 class="col-md-7">Tasks</h1>
     <div class="col-md-2 tasks-sort-links">
-      <%= link_to_unless params[:sort] == "all", 'All', tasks_path(sort: :all, tableSort: :description) %>
+      <%= link_to_unless params[:sort] == "all", 'All', project_tasks_path(@project, sort: :all, tableSort: :description) %>
       |
-      <%= link_to_unless !params[:sort] || params[:sort] == "incomplete", 'Incomplete', tasks_path(sort: :incomplete, tableSort: :description) %>
+      <%= link_to_unless !params[:sort] || params[:sort] == "incomplete", 'Incomplete', project_tasks_path(@project), sort: :incomplete, tableSort: :description %>
     </div>
     <div class="col-md-3 tasks-create-button">
       <span class="pull-right">
-        <%= link_to 'Download CSV', tasks_path(format: "csv"), class: "btn btn-info" %>
-        <%= link_to 'Create Task', new_task_path, class: "btn btn-info" %>
+        <%= link_to 'Download CSV', project_tasks_path(@project), format: "csv", class: "btn btn-info" %>
+        <%= link_to 'Create Task', new_project_task_path(@project), class: "btn btn-info" %>
       </span>
     </div>
+    <div class="container">
+      <%=
+        crumbs([
+                {:name => "Projects", :link => "/projects"},
+                {:name => @project.name, :link => "/projects/#{@project.id}"},
+                {:name => "Tasks", :link => "active"}
+              ])
+       %>
+    </div>
   </div>
-  <th colspan="3"></th>
 
   <table class="table">
     <thead>
@@ -35,16 +43,16 @@
           <td class="col-md-3 text-center">
             <div class="tasks-td-top-buffer">
               <%= if task.complete == false
-
-                    link_to content_tag(:span, "", class: "glyphicon glyphicon-unchecked"),
-                    toggleCompletion_path(currentId: task.id, sort: params[:sort], tableSort: params[:tableSort]),
-                    class: "btn btn-default btn-sm"
+                    content_tag(:span, "", class: "glyphicon glyphicon-unchecked")
+                    # link_to content_tag(:span, "", class: "glyphicon glyphicon-unchecked"),
+                    # toggleCompletion_path(@project), currentId: task.id, sort: params[:sort], tableSort: params[:tableSort],
+                    # class: "btn btn-default btn-sm"
 
                   elsif task.complete == true
-
-                    link_to content_tag(:span, "", class: "glyphicon glyphicon-check"),
-                    toggleCompletion_path(currentId: task.id, sort: params[:sort], tableSort: params[:tableSort]),
-                    class: "btn btn-default btn-sm"
+                    content_tag(:span, "", class: "glyphicon glyphicon-check")
+                    # link_to content_tag(:span, "", class: "glyphicon glyphicon-check"),
+                    # toggleCompletion_path(@project), currentId: task.id, sort: params[:sort], tableSort: params[:tableSort],
+                    # class: "btn btn-default btn-sm"
 
                   end %>
             </div>
@@ -56,9 +64,9 @@
           </td>
           <td class="col-md-3">
             <span class="pull-right">
-              <%= link_to 'Show', task, class: "btn btn-success" %>
-              <%= link_to 'Edit', edit_task_path(task), class: "btn btn-primary" %>
-              <%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
+              <%= link_to 'Show', project_task_path(@project, task), class: "btn btn-success" %>
+              <%= link_to 'Edit', edit_project_task_path(@project, task), class: "btn btn-primary" %>
+              <%= link_to 'Destroy', project_task_path(@project, task), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
             </span>
           </td>
         </tr>

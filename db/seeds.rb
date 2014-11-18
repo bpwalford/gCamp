@@ -6,9 +6,9 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-Task.delete_all
 User.delete_all
 Project.delete_all
+Task.delete_all
 
 14.times do
   password = rand(1..1000)
