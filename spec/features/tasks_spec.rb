@@ -2,19 +2,29 @@ require "rails_helper"
 
 feature "tasks" do
 
+  before do
+
+    Project.create!(
+      name: "test"
+    )
+
+  end
+
   scenario "user CRUD's a new task" do
 
     # begin on home page
     visit home_path
 
     # create a new task
-    click_on "Tasks"
+    click_on "Projects"
+    click_on "test"
+    click_on "0 Tasks"
     click_on "Create Task"
     fill_in "Description", with: "testing"
     fill_in "Due date", with: "01-01-2999"
     click_on "Create Task"
 
-    # verify task and attributes exist on show and index
+    # verify task and attributes exist on show and index, and project index
     expect(page).to have_content("Task was successfully created.")
     expect(page).to have_content("Description: testing")
     expect(page).to have_content("01/01/99")
@@ -23,8 +33,13 @@ feature "tasks" do
     expect(page).to have_no_content("Task was successfully created.")
     expect(page).to have_content("testing")
     expect(page).to have_content("01/01/99")
+    click_on "test"
+    expect(page).to have_content("1 Task")
+    click_on "Projects"
+    expect(page).to have_content("1")
 
     # edit task
+    click_on "1"
     click_on "Edit"
     fill_in "Description", with: "different"
     fill_in "Due date", with: "01-01-2013"
@@ -48,6 +63,10 @@ feature "tasks" do
     expect(page).to have_content("Task was successfully destroyed.")
     expect(page).to have_no_content("different")
     expect(page).to have_no_content("01/01/13")
+    click_on "test"
+    expect(page).to have_content("0 Tasks")
+    click_on "Projects"
+    expect(page).to have_content("0")
 
 
   end
@@ -58,7 +77,8 @@ feature "tasks" do
     visit home_path
 
     # attempt to create task
-    click_on "Tasks"
+    click_on "Projects"
+    click_on "0"
     click_on "Create Task"
     click_on "Create Task"
 
@@ -74,7 +94,8 @@ feature "tasks" do
     visit home_path
 
     # attempt to create task
-    click_on "Tasks"
+    click_on "Projects"
+    click_on "0"
     click_on "Create Task"
     fill_in "Description", with: "test"
     fill_in "Due date", with: "01/01/2000"
@@ -88,16 +109,19 @@ feature "tasks" do
   scenario "update user with due date in past" do
 
     # create test task
-    Task.create!(
+    task = Task.new(
       description: "test",
       due_date: Date.today
     )
+    task.project = Project.first
+    task.save
 
     # begin on home page
     visit home_path
 
     # update task
-    click_on "Tasks"
+    click_on "Projects"
+    click_on "1"
     click_on "Edit"
     fill_in "Due date", with: "01-01-2000"
     click_on "Update Task"

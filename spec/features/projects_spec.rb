@@ -16,11 +16,13 @@ feature "Projects" do
     # verify project exits on show page
     expect(page).to have_content("Project was successfully created.")
     expect(page).to have_content("test")
+    expect(page).to have_content("0 Tasks")
 
     # verify project exists on index
     visit projects_path
     expect(page).to have_no_content("Project was successfully created.")
     expect(page).to have_content("test")
+    expect(page).to have_content("0 Tasks")
 
     # edit project
     click_on "test"
