@@ -3,6 +3,8 @@ class Task < ActiveRecord::Base
   validates_presence_of :description, :due_date
   validate :cant_be_due_in_past, on: :create
 
+  belongs_to :project
+
 
   def cant_be_due_in_past
     if due_date.present? && due_date < Date.today

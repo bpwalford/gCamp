@@ -10,14 +10,6 @@ Task.delete_all
 User.delete_all
 Project.delete_all
 
-20.times do
-
-  Task.create description: Faker::Lorem.sentence(3),
-              due_date: Faker::Date.forward(30),
-              complete: [true, false].sample
-
-end
-
 14.times do
   password = rand(1..1000)
   User.create first_name: Faker::Name.first_name,
@@ -31,6 +23,18 @@ end
 
 10.times do
 
-  Project.create name: Faker::App.name
+  project = Project.create name: Faker::App.name
+
+  rand(1..15).times do
+
+    task = Task.new(
+      description: Faker::Lorem.sentence(3),
+      due_date: Faker::Date.forward(30),
+      complete: [true, false].sample
+    )
+    task.project = project
+    task.save
+
+  end
 
 end

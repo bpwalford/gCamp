@@ -1,5 +1,5 @@
 <div class="container ">
-  
+
   <div class="page-header row">
 
     <h1 class="col-md-11">Projects</h1>
@@ -13,6 +13,7 @@
     <thead>
       <tr>
         <th class="col-md-2">Name</th>
+        <th class="col-md-2">Tasks</th>
       </tr>
     </thead>
     <tbody>
@@ -21,6 +22,11 @@
           <td>
             <div class="pull-left tasks-td-top-buffer">
               <%= link_to project.name, project_path(project) %>
+            </div>
+          </td>
+          <td>
+            <div class="tasks-td-top-buffer">
+              <%= link_to project.tasks.length, project_tasks_path(project) %>
             </div>
           </td>
         </tr>

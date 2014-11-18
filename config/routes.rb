@@ -2,7 +2,10 @@ Rails.application.routes.draw do
 
   get 'tasks/toggleCompletion' => 'tasks#toggleCompletion', as: :toggleCompletion
 
-  resources :tasks, :users, :projects
+  resources :users
+  resources :projects do
+    resources :tasks
+  end
 
   root "pages#index", as: :home
 
