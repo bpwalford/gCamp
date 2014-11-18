@@ -22,7 +22,7 @@ feature "Projects" do
     visit projects_path
     expect(page).to have_no_content("Project was successfully created.")
     expect(page).to have_content("test")
-    expect(page).to have_content("0 Tasks")
+    expect(page).to have_content("0")
 
     # edit project
     click_on "test"

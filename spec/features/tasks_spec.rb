@@ -5,7 +5,7 @@ feature "tasks" do
   before do
 
     Project.create!(
-      name: "test"
+      name: "testProject"
     )
 
   end
@@ -17,7 +17,7 @@ feature "tasks" do
 
     # create a new task
     click_on "Projects"
-    click_on "test"
+    click_on "testProject"
     click_on "0 Tasks"
     click_on "Create Task"
     fill_in "Description", with: "testing"
@@ -26,16 +26,18 @@ feature "tasks" do
 
     # verify task and attributes exist on show and index, and project index
     expect(page).to have_content("Task was successfully created.")
-    expect(page).to have_content("Description: testing")
-    expect(page).to have_content("01/01/99")
-    expect(page).to have_content("Complete: false")
-    click_on "Back"
-    expect(page).to have_no_content("Task was successfully created.")
     expect(page).to have_content("testing")
     expect(page).to have_content("01/01/99")
-    click_on "test"
+    click_on "Show"
+    expect(page).to have_no_content("Task was successfully created.")
+    expect(page).to have_content("Description: testing")
+    expect(page).to have_content("Complete: false")
+    expect(page).to have_content("01/01/99")
+    click_on "testProject"
     expect(page).to have_content("1 Task")
-    click_on "Projects"
+    within(".footer-content") do
+      click_on "Projects"
+    end
     expect(page).to have_content("1")
 
     # edit task
@@ -48,7 +50,7 @@ feature "tasks" do
 
 
     # verify alterations were saved and exist on show and index
-    expect(page).to have_content("Task was successfully updated.")
+    expect(page).to have_content("Tasks was successfully updated.")
     expect(page).to have_content("Description: different")
     expect(page).to have_content("Due: 01/01/13")
     expect(page).to have_content("Complete: true")
@@ -65,7 +67,9 @@ feature "tasks" do
     expect(page).to have_no_content("01/01/13")
     click_on "test"
     expect(page).to have_content("0 Tasks")
-    click_on "Projects"
+    within(".footer-content") do
+      click_on "Projects"
+    end
     expect(page).to have_content("0")
 
 
@@ -127,7 +131,7 @@ feature "tasks" do
     click_on "Update Task"
 
     # expect success message
-    expect(page).to have_content("Task was successfully updated")
+    expect(page).to have_content("Tasks was successfully updated")
 
   end
 
