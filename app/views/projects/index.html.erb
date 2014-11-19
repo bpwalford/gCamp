@@ -12,8 +12,9 @@
   <table class="table">
     <thead>
       <tr>
-        <th class="col-md-2">Name</th>
-        <th class="col-md-10">Tasks</th>
+        <th>Name</th>
+        <th>Members</th>
+        <th>Tasks</th>
       </tr>
     </thead>
     <tbody>
@@ -24,8 +25,11 @@
               <%= link_to project.name, project_path(project) %>
             </div>
           </td>
+          <td class="tasks-td-top-buffer">
+            <%= link_to project.memberships.length, project_memberships_path(project) %>
+          </td>
           <td>
-            <div class="tasks-td-top-buffer pull-left">
+            <div class="tasks-td-top-buffer">
               <%= link_to project.tasks.length, project_tasks_path(project) %>
             </div>
           </td>

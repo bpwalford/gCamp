@@ -105,6 +105,18 @@
   text-align: right;
 }
 
+// members
+.current-members {
+  margin-bottom: 1%;
+
+  .name{
+    margin-top: 8px;
+  }
+  .delete-x{
+    margin-top: 8px;
+  }
+}
+
 // footer
 
 hr {

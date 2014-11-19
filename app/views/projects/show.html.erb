@@ -29,4 +29,12 @@
     <% end %>
   </div>
 
+    <div>
+    <% if @project.memberships.length == 1 %>
+      <%= link_to "1 Member", project_memberships_path(@project) %>
+    <% else %>
+      <%= link_to @project.memberships.length.to_s + " Members", project_memberships_path(@project) %>
+    <% end %>
+  </div>
+
 </div>
