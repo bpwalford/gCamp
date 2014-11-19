@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 20141118210829) do
   create_table "memberships", force: true do |t|
     t.integer "user_id"
     t.integer "project_id"
-    t.string  "status"
+    t.string  "status",     default: "member"
   end
 
   create_table "projects", force: true do |t|

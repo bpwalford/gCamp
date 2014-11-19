@@ -33,7 +33,7 @@
     <div class="new-member-form form-inline well col-md-6">
       <%= form_for [@project, @membership] do |f| %>
         <!-- select user -->
-        <div class="form-group col-md-4">
+        <div class="form-group col-md-5">
           <%= f.collection_select(
                 :user_id,
                 User.all,
