@@ -36,6 +36,8 @@ end
       complete: [true, false].sample
     )
 
+    project.tasks.append(task)
+
   end
 
   rand(1..15).times do
