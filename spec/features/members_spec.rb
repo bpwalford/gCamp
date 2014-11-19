@@ -34,22 +34,16 @@ feature "Members" do
     end
     expect(page).to have_content("test")
     expect(page).to have_content("member")
+    expect(page).to have_content("#{User.first.full_name} successfully added to project.")
 
-    # changed to owner form index
+    # changed to owner from index
     within(".current-members") do
       select "owner", from: "membership_status"
       click_on "Update"
     end
     expect(page).to have_content("test")
     expect(page).to have_content("owner")
-
-    # member deleted
-    within(".delete-x") do
-      page.first(".glyphicon").click
-      expect(page).to have_no_content("test testing")
-      expect(page).to have_no_content("owner")
-      expect(page).to have_no_content("Update")
-    end
+    expect(page).to have_content("#{User.first.full_name} was successfully updated.")
 
   end
 

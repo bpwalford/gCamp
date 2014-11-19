@@ -7,7 +7,6 @@ describe "Task" do
     task = Task.new
     task.valid?
     expect(task.errors[:description].present?).to eq(true)
-    expect(task.errors[:due_date].present?).to eq(true)
 
     task.description = "description"
     task.due_date = Date.today + 1.year

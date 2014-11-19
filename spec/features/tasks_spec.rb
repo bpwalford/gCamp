@@ -89,7 +89,6 @@ feature "tasks" do
 
     # expect error messages
     expect(page).to have_content("Description can't be blank")
-    expect(page).to have_content("Due date can't be blank")
 
   end
 

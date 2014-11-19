@@ -6,19 +6,17 @@ class MembershipsController < ApplicationController
 
   def index
     @membership = @project.memberships.new
-    @memberships = Membership.where(project_id: @project.id)
+    @memberships = @project.memberships.all
   end
 
   def create
 
     @membership = @project.memberships.new(set_params)
-    # @membership.user_id = params[:membership][:user_id]
-    # @membership.status = params[:membership][:status]
 
     if @membership.save
       redirect_to project_memberships_path(@project), notice: @membership.user.full_name + ' successfully added to project.'
     else
-      @memberships = Membership.where(project_id: @project.id)
+      @memberships = @project.memberships.all
       render :index
     end
   end
@@ -26,7 +24,7 @@ class MembershipsController < ApplicationController
   def update
     @membership = Membership.find(params[:id])
     if @membership.update(set_params)
-      redirect_to project_memberships_path(@project), notice: 'User successfully updated.'
+      redirect_to project_memberships_path(@project), notice: @membership.user.full_name + ' was successfully updated.'
     else
       redirect_to project_memberships_path(@project)
     end
@@ -35,7 +33,7 @@ class MembershipsController < ApplicationController
   def destroy
     @membership = Membership.find(params[:id])
     @membership.destroy
-    redirect_to project_memberships_path(@project), notice: 'Member successfully removed'
+    redirect_to project_memberships_path(@project), notice: @membership.user.full_name + ' was removed successfully'
   end
 
   def set_params

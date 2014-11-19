@@ -96,7 +96,7 @@
           <!-- remove member from project -->
           <div class="col-md-2 delete-x">
             <%= link_to(
-                content_tag(:span, "fuck", class: "glyphicon glyphicon-remove"),
+                content_tag(:span, "", class: "glyphicon glyphicon-remove"),
                 project_membership_path(@project, member),
                 method: :delete,
                 data: {confirm: "Are you sure you want to remove #{member.user.first_name} from #{@project.name}?"}) %>

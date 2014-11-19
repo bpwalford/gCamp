@@ -35,8 +35,8 @@ feature "tasks" do
     fill_in "First name", with: "different"
     fill_in "Last name", with: "differenter"
     fill_in "Email", with: "different@example.com"
-    fill_in "Password", with: "1234"
-    fill_in "Password confirmation", with: "1234"
+    # fill_in "Password", with: "1234"
+    # fill_in "Password confirmation", with: "1234"
     click_on "Update User"
 
     # verify alterations were saved and exist on the index

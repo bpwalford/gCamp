@@ -1,6 +1,6 @@
 class Task < ActiveRecord::Base
 
-  validates_presence_of :description, :due_date
+  validates_presence_of :description
   validate :cant_be_due_in_past, on: :create
 
   belongs_to :project
@@ -13,7 +13,11 @@ class Task < ActiveRecord::Base
   end
 
   def due_soon
-    Date.today >= self.due_date - 7.days ? true : false
+    if self.due_date
+      Date.today >= self.due_date - 7.days ? true : false
+    else
+      false
+    end
   end
 
   def self.to_csv

@@ -59,7 +59,7 @@
           </td>
           <td class="col-md-3 text-center">
             <div class="tasks-td-top-buffer">
-              <%= task.due_date.strftime('%m/%d/%y') %>
+              <%= task.due_date.strftime('%m/%d/%y') if task.due_date %>
             </div>
           </td>
           <td class="col-md-3">
