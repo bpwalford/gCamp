@@ -1,10 +1,8 @@
 <div class="container">
 
+  <!-- header and breadcrumbs -->
   <div class="page-header">
     <h1><%= @project.name %>: Manage Members</h1>
-    
-    <%= render 'shared/errors', model: @membership %>
-
     <%=
       crumbs([
               {:name => "Projects", :link => "/projects"},
@@ -14,61 +12,99 @@
     %>
   </div>
 
+  <!-- error messages -->
+  <% if @membership.errors.any? %>
+    <div class="container">
+      <div class="row">
+        <div class="alert alert-danger col-md-5">
+          <h5><%= pluralize(@membership.errors.count, "error") %> prohibited this task from being saved:</h5>
+          <ul>
+            <% @membership.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
+  <% end %>
 
-
-  <div class="new-member-form form-inline well col-md-7">
-    <%= form_for [@project, @membership] do |f| %>
-
-
-      <div class="form-group col-md-5">
-        <%= f.label :user %>
-        <%= f.collection_select(
+  <!-- form for new member of project -->
+  <div class"row">
+    <div class="new-member-form form-inline well col-md-6">
+      <%= form_for [@project, @membership] do |f| %>
+        <!-- select user -->
+        <div class="form-group col-md-4">
+          <%= f.collection_select(
                 :user_id,
                 User.all,
                 :id,
                 :full_name,
                 {include_blank: 'please select a user'},
                 {class: 'form-control'}) %>
-      </div>
-      <div class="form-group">
-        <%= f.label :status %>
-        <%= f.select :status,
-                      options_for_select(%w[member owner]),
-                      {},
-                      {class: 'form-control'} %>
-      </div>
-      <%= f.submit  "Add New Member", class: 'btn btn-primary pull-right' %>
-
-    <% end %>
+        </div>
+        <!-- select user status -->
+        <div class="form-group col-md-3">
+          <%= f.select(
+                :status,
+                options_for_select(%w[member owner]),
+                {},
+                {class: 'form-control'}) %>
+        </div>
+        <!-- submit -->
+        <div class="col-md-4 pull-right">
+          <%= f.submit  "Add New Member", class: 'btn btn-primary pull-right' %>
+        </div>
+      <% end %> <!-- end of form_for -->
+    </div>
   </div>
 
+</div> <!-- end of container -->
+
+
+
+<div class="container">
+
+  <!-- form for changing current member status -->
   <% @memberships.each do |member| %>
     <div class="current-members form-inline row">
       <div class="col-md-6">
-
         <%= form_for [@project, member] do |f| %>
+          <!-- output members name -->
           <div class="col-md-4 name">
             <%= member.user.full_name %>
           </div>
+          <!-- select member status -->
           <div class="col-md-2">
-            <%= f.select :status,
-                          options_for_select(%w[member owner]),
-                          {include_blank: member.status},
-                          {class: 'form-control'} %>
+            <% if member.status == "member" %>
+              <%= f.select(
+                    :status,
+                    options_for_select(%w[owner]),
+                    {include_blank: member.status},
+                    {class: 'form-control'}) %>
+            <% else %>
+              <%= f.select(
+                    :status,
+                    options_for_select(%w[member]),
+                    {include_blank: member.status},
+                    {class: 'form-control'}) %>
+            <% end %>
           </div>
+          <!-- update member status -->
           <div class="col-md-3">
             <%= f.submit "Update", class: "btn btn-primary pull-right" %>
           </div>
+          <!-- remove member from project -->
           <div class="col-md-2 delete-x">
-            <%= link_to content_tag(:span, "", class: "glyphicon glyphicon-remove"),
-                        project_membership_path(@project, member),
-                        method: :delete,
-                        data: {confirm: 'Are you sure?'} %>
+            <%= link_to(
+                content_tag(:span, "fuck", class: "glyphicon glyphicon-remove"),
+                project_membership_path(@project, member),
+                method: :delete,
+                data: {confirm: "Are you sure you want to remove #{member.user.first_name} from #{@project.name}?"}) %>
           </div>
-        <% end %>
 
+        <% end %> <!-- end of form_for -->
       </div>
     </div>
-  <% end %>
+  <% end %> <!-- end of @memberships.each -->
 
-</div>
+</div> <!-- end of container -->

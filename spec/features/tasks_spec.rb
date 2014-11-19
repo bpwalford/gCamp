@@ -82,7 +82,8 @@ feature "tasks" do
 
     # attempt to create task
     click_on "Projects"
-    click_on "0"
+    click_on "testProject"
+    click_on "0 Tasks"
     click_on "Create Task"
     click_on "Create Task"
 
@@ -99,7 +100,8 @@ feature "tasks" do
 
     # attempt to create task
     click_on "Projects"
-    click_on "0"
+    click_on "testProject"
+    click_on "0 Tasks"
     click_on "Create Task"
     fill_in "Description", with: "test"
     fill_in "Due date", with: "01/01/2000"

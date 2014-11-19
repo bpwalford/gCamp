@@ -11,16 +11,15 @@ class MembershipsController < ApplicationController
 
   def create
 
-    @membership = Membership.new
-    @membership.project_id = @project.id
-    @membership.user_id = params[:membership][:user_id]
-    @membership.status = params[:membership][:status]
+    @membership = @project.memberships.new(set_params)
+    # @membership.user_id = params[:membership][:user_id]
+    # @membership.status = params[:membership][:status]
 
-    if @membership.save(set_params)
+    if @membership.save
       redirect_to project_memberships_path(@project), notice: @membership.user.full_name + ' successfully added to project.'
     else
-      # render :index
-      redirect_to project_memberships_path(@project)
+      @memberships = Membership.where(project_id: @project.id)
+      render :index
     end
   end
 
