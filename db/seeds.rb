@@ -9,14 +9,16 @@
 User.delete_all
 Project.delete_all
 Task.delete_all
+Membership.delete_all
 
-14.times do
+25.times do
   password = rand(1..1000)
-  User.create first_name: Faker::Name.first_name,
+  User.create! first_name: Faker::Name.first_name,
               last_name: Faker::Name.last_name,
               email: Faker::Internet.email,
               password: password,
               password_confirmation: password
+
 
 end
 
@@ -25,6 +27,7 @@ end
 
   project = Project.create name: Faker::App.name
 
+
   rand(1..15).times do
 
     task = Task.new(
@@ -32,8 +35,15 @@ end
       due_date: Faker::Date.forward(30),
       complete: [true, false].sample
     )
-    task.project = project
-    task.save
+
+  end
+
+  rand(1..15).times do
+
+    user = User.all.sample
+    if !project.users.include?(user)
+      project.users.append(user)
+    end
 
   end
 
