@@ -1,18 +1,21 @@
-<div class="container ">
+<div class="container task-show">
 
-  <h1><%= @task.description %></h1>
+  <div class="row page-header">
+    <h1 class="col-md-10"><%= @task.description %></h1>
+    <div class="col-md-2">
+      <%= link_to 'Edit', edit_project_task_path(@project, @task), class: "pull-right btn btn-info" %>
+    </div>
+  </div>
+
   <%=
     crumbs([
+            {:name => "Projects", :link => "/projects"},
             {:name => "#{@project.name}", :link => "/projects/#{@project.id}"},
-            {:name => @task.description, :link => "active"}
+            {:name => "Tasks", :link => "/projects/#{@project.id}/tasks"},
+            {:name => "Show", :link => "active"}
           ])
-
    %>
 
-  <p>
-    <strong>Description:</strong>
-    <%= @task.description %>
-  </p>
   <p>
     <strong>Due:</strong>
     <%= @task.due_date.strftime('%m/%d/%y') %>
@@ -22,7 +25,40 @@
     <%= @task.complete %>
   </p>
 
+  <div class="task-comments">
 
-  <%= link_to 'Edit', edit_project_task_path(@project, @task) %> |
-  <%= link_to 'Back', project_tasks_path %>
+    <h3>Comments</h3>
+
+    <% @task.comments.each do |comment| %>
+      <div class="row user-comment">
+        <div class="col-md-3">
+          <div class="row">
+            <div class="col-md-12">
+              <%= link_to comment.user.full_name, user_path(comment.user) %>
+            </div>
+            <div class="col-md-12 text-muted">
+              <%= time_ago_in_words(comment.created_at) + " ago" %>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-9">
+          <%= comment.content %>
+        </div>
+      </div>
+    <% end %>
+
+    <% if current_user %>
+    <% @comment = @task.comments.new %>
+      <div class="row">
+        <div class="col-md-9 col-md-offset-3">
+          <%= form_for [@project, @task, @comment] do |f| %>
+            <%= f.text_area :content, class: "form-control" %>
+            <%= f.submit "Add Comment", class: "btn btn-primary"%>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+
+  </div>
+
 </div>

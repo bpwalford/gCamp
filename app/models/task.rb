@@ -4,6 +4,7 @@ class Task < ActiveRecord::Base
   validate :cant_be_due_in_past, on: :create
 
   belongs_to :project
+  has_many :comments
 
 
   def cant_be_due_in_past

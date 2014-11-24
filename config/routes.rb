@@ -3,9 +3,10 @@ Rails.application.routes.draw do
   get 'tasks/toggleCompletion' => 'tasks#toggleCompletion', as: :toggleCompletion
 
   resources :users
-  resources :comments, only: [:create, :update, :destroy]
   resources :projects do
-    resources :tasks
+    resources :tasks do
+      resources :comments, only: [:create]
+    end
     resources :memberships
   end
 

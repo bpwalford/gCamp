@@ -18,9 +18,10 @@ feature "Comments" do
 
     task = project.tasks.create!(
       description: "taskDescription",
+      due_date: Date.today + 1.year
     )
 
-    visit root_path
+    visit home_path
     click_on "Sign In"
     fill_in "Email", with: "test@example.com"
     fill_in "Password", with: "asdf"
@@ -36,14 +37,14 @@ feature "Comments" do
     click_on "newProject"
     click_on "1 Task"
     click_on "taskDescription"
-    fill_in "<some area>", with: "This is a comment by test testing"
+    fill_in "comment_content", with: "This is a comment by test testing"
     click_on "Add Comment"
     # expect commenter name
     expect(page).to have_content("test testing")
     # expect comment
     expect(page).to have_content("This is a comment by test testing")
     # expect time ago it was created
-    expect(page).to have_content("Less than a minute ago")
+    expect(page).to have_content("less than a minute ago")
 
   end
 
@@ -54,7 +55,9 @@ feature "Comments" do
     click_on "1 Task"
     click_on "taskDescription"
     click_on "Add Comment"
-    expect(page).to have_no_content("test testing")
+    within(".task-comments") do
+      expect(page).to have_no_content("test testing")
+    end
     expect(page).to have_no_content("Less than a minute ago")
 
   end
@@ -76,38 +79,50 @@ feature "Comments" do
       name: "otherProject"
     )
     projectOther.tasks.create!(
-      description: "different"
+      description: "different",
+      due_date: Date.today + 1.year
     )
 
     click_on "Projects"
     click_on "newProject"
     click_on "1 Task"
     click_on "taskDescription"
-    fill_in "<some area>", with: "This is a comment by test testing"
+    fill_in "comment_content", with: "This is a comment by test testing"
     click_on "Add Comment"
     expect(page).to have_content("test testing")
     expect(page).to have_content("This is a comment by test testing")
-    expect(page).to have_content("Less than a minute ago")
-    click_on "Projects"
+    expect(page).to have_content("less than a minute ago")
+    within(".task-show") do
+      click_on "Projects"
+    end
     click_on "otherProject"
     click_on "1 Task"
     click_on "different"
-    expect(page).to have_no_content("test testing")
+    within(".task-comments") do
+      expect(page).to have_no_content("test testing")
+    end
     expect(page).to have_no_content("This is a comment by test testing")
-    expect(page).to have_no_content("Less than a minute ago")
+    expect(page).to have_no_content("less than a minute ago")
 
   end
 
   scenario "User can view a count of comments from the task index" do
 
-    project.tasks.create!(
+    project = Project.first
+    task = project.tasks.create!(
       description: "fucking tasks"
     )
+    10.times do
+      task.comments.create!(
+        content: "content"
+      )
+    end
+
 
     click_on "Projects"
     click_on "newProject"
-    click_on "1 Task"
-    expect(page).to have_content("2")
+    click_on "2 Tasks"
+    expect(page).to have_content("10")
 
   end
 
