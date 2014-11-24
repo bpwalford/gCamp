@@ -59,18 +59,16 @@ feature "tasks" do
     expect(page).to have_content("01/01/13")
 
     # delete task and verify deletion
-    # within(".task-index-buttons") do
-    #   find(".glyphicon").click
-    # end
-    # expect(page).to have_content("Task was successfully destroyed.")
-    # expect(page).to have_no_content("different")
-    # expect(page).to have_no_content("01/01/13")
-    # click_on "test"
-    # expect(page).to have_content("0 Tasks")
-    # within(".footer-content") do
-    #   click_on "Projects"
-    # end
-    # expect(page).to have_content("0")
+    click_on "delete"
+    expect(page).to have_content("Task was successfully destroyed.")
+    expect(page).to have_no_content("different")
+    expect(page).to have_no_content("01/01/13")
+    click_on "test"
+    expect(page).to have_content("0 Tasks")
+    within(".footer-content") do
+      click_on "Projects"
+    end
+    expect(page).to have_content("0")
 
 
   end

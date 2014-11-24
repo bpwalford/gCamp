@@ -69,7 +69,7 @@
             <span class="pull-right task-index-buttons">
               <%= link_to 'Edit', edit_project_task_path(@project, task), class: "btn btn-primary" %>
               <%= link_to link_to content_tag(:span, "", class: "glyphicon glyphicon-remove"),
-                project_task_path(@project, task), method: :delete, data: { confirm: 'Are you sure?'}%>
+                project_task_path(@project, task), method: :delete, data: { confirm: 'Are you sure?'}, title: "delete"%>
             </span>
           </td>
         </tr>
