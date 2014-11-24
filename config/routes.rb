@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   get 'tasks/toggleCompletion' => 'tasks#toggleCompletion', as: :toggleCompletion
 
   resources :users
+  resources :comments, only: [:create, :update, :destroy]
   resources :projects do
     resources :tasks
     resources :memberships
