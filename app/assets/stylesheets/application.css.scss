@@ -78,35 +78,42 @@
 
 // tasks
 
-.tasks-td-top-buffer {
-  margin-top: 8px;
-}
+.task-index {
 
-.tasks-sort-links {
-  margin-top: 4%;
-  text-align: right;
-  left: 55px;
-  bottom: 6px;
-
-}
-
-.tasks-create-button {
-  margin-top: 3%;
-}
-
-.breadcrumb {
-  background: none;
-  margin-left: -12px;
-}
-
-.task-show {
-
-  .btn {
-    margin-top: 25px;
+  .badge {
+    margin-left: 5px;
+  }
+  
+  .tasks-td-top-buffer {
+    margin-top: 8px;
   }
 
-  .user-comment {
-    margin-bottom: 20px;
+  .tasks-sort-links {
+    margin-top: 4%;
+    text-align: right;
+    left: 55px;
+    bottom: 6px;
+
+  }
+
+  .tasks-create-button {
+    margin-top: 3%;
+  }
+
+  .breadcrumb {
+    background: none;
+    margin-left: -12px;
+  }
+
+  .task-show {
+
+    .btn {
+      margin-top: 25px;
+    }
+
+    .user-comment {
+      margin-bottom: 20px;
+    }
   }
 }
 

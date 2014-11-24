@@ -30,8 +30,11 @@ end
 
   rand(1..15).times do
 
+    description = Faker::Lorem.sentence(5)
+    description = description.split
+
     task = Task.new(
-      description: Faker::Lorem.sentence(3),
+      description: description.sample + " " + description.sample,
       due_date: Faker::Date.forward(30),
       complete: [true, false].sample
     )
