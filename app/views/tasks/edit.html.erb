@@ -2,14 +2,14 @@
 
   <h1 class="page-header">Edit task</h1>
 
-  <%=
-    crumbs([
-            {:name => "#{@project.name}", :link => "/projects/#{@project.id}"},
-            {:name => @task.description, :link => "/projects/#{@project.id}/tasks/#{@task.id}"},
-            {:name => "Edit", :link => "active"}
-          ])
-   %>
+  <%= crumbs([ {:name => "#{@project.name}", :link => "/projects/#{@project.id}"},
+               {:name => @task.description, :link => "/projects/#{@project.id}/tasks/#{@task.id}"},
+               {:name => "Edit", :link => "active"} ]) %>
+
+  <br><br>
 
   <%= render 'form' %>
 
+  <br><br>
+  
 </div>

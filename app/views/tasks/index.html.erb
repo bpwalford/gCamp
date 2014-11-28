@@ -17,13 +17,9 @@
     </div>
   </div>
 
-  <%=
-    crumbs([
-            {:name => "Projects", :link => "/projects"},
-            {:name => @project.name, :link => "/projects/#{@project.id}"},
-            {:name => "Tasks", :link => "active"}
-          ])
-  %>
+  <%= crumbs([ {:name => "Projects", :link => "/projects"},
+               {:name => @project.name, :link => "/projects/#{@project.id}"},
+               {:name => "Tasks", :link => "active"} ]) %>
 
   <br>
 

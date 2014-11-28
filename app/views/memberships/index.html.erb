@@ -3,14 +3,13 @@
   <!-- header and breadcrumbs -->
   <div class="page-header">
     <h1><%= @project.name %>: Manage Members</h1>
-    <%=
-      crumbs([
-              {:name => "Projects", :link => "/projects"},
-              {:name => "#{@project.name}", :link => "/projects/#{@project.id}"},
-              {:name => "Memberships", :link => "active"}
-            ])
-    %>
   </div>
+
+  <%= crumbs([ {:name => "Projects", :link => "/projects"},
+             {:name => "#{@project.name}", :link => "/projects/#{@project.id}"},
+             {:name => "Memberships", :link => "active"} ]) %>
+
+  <br>
 
   <!-- error messages -->
   <% if @membership.errors.any? %>
