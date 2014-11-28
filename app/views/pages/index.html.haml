@@ -6,25 +6,25 @@
       %p Your life, organized
 -# panels
 .row
-- @panel_elements.each do |element|
-  .col-md-4
-    .panel.panel-default.panel-image
-      .panel-body=image_tag(element.first, :class => 'img-responsive')
-    .panel.panel-primary.panel-content
-      .panel-heading
-        %h4.panel-title= element[1]
-      .panel-body
-        - if element.last.length == 1
-          %p= element.last[0]
-        - else
-          %ul
-            - element.last.each do |item|
-              %li= item
+  .col-md-12
+  - @panel_elements.each do |element|
+    .col-md-4
+      .panel.panel-default.panel-image
+        .panel-body=image_tag(element.first, :class => 'img-responsive')
+      .panel.panel-primary.panel-content
+        .panel-heading
+          %h4.panel-title= element[1]
+        .panel-body
+          - if element.last.length == 1
+            %p= element.last[0]
+          - else
+            %ul
+              - element.last.each do |item|
+                %li= item
 -# quotes
 .row
   .col-md-12
-    .container
-      - @quotes.each do |quote|
-        %h4= quote.first
-        %h5.home-quote
-          %small= quote.last
+    - @quotes.each do |quote|
+      %h4= quote.first
+      %h5.home-quote
+        %small= quote.last

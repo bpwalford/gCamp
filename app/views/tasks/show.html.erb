@@ -1,4 +1,4 @@
-<div class="container task-show">
+<div class="task-show">
 
   <div class="row page-header">
     <h1 class="col-md-10"><%= @task.description %></h1>
@@ -7,14 +7,10 @@
     </div>
   </div>
 
-  <%=
-    crumbs([
-            {:name => "Projects", :link => "/projects"},
-            {:name => "#{@project.name}", :link => "/projects/#{@project.id}"},
-            {:name => "Tasks", :link => "/projects/#{@project.id}/tasks"},
-            {:name => "Show", :link => "active"}
-          ])
-   %>
+  <%= crumbs([ {:name => "Projects", :link => "/projects"},
+               {:name => "#{@project.name}", :link => "/projects/#{@project.id}"},
+               {:name => "Tasks", :link => "/projects/#{@project.id}/tasks"},
+               {:name => "Show", :link => "active"} ]) %>
 
   <p>
     <strong>Due:</strong>
@@ -27,28 +23,29 @@
 
   <div class="task-comments">
 
-    <h3>Comments</h3>
-
-    <% @task.comments.each do |comment| %>
-      <div class="row user-comment">
-        <div class="col-md-3">
-          <div class="row">
-            <div class="col-md-12">
-              <% if comment.user %>
-                <%= link_to comment.user.full_name, user_path(comment.user) %>
-              <% else %>
-                <%= "(deleted user)" %>
-              <% end %>
-            </div>
-            <div class="col-md-12 text-muted">
-              <%= time_ago_in_words(comment.created_at) + " ago" %>
+    <% if @task.comments.length > 0 %>
+      <h3>Comments</h3>
+      <% @task.comments.each do |comment| %>
+        <div class="row user-comment">
+          <div class="col-md-3">
+            <div class="row">
+              <div class="col-md-12">
+                <% if comment.user %>
+                  <%= link_to comment.user.full_name, user_path(comment.user) %>
+                <% else %>
+                  <%= "(deleted user)" %>
+                <% end %>
+              </div>
+              <div class="col-md-12 text-muted">
+                <%= time_ago_in_words(comment.created_at) + " ago" %>
+              </div>
             </div>
           </div>
+          <div class="col-md-9">
+            <%= comment.content %>
+          </div>
         </div>
-        <div class="col-md-9">
-          <%= comment.content %>
-        </div>
-      </div>
+      <% end %>
     <% end %>
 
     <% if current_user %>
@@ -62,7 +59,8 @@
         </div>
       </div>
     <% end %>
-
+    
   </div>
+
 
 </div>

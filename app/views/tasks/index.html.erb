@@ -1,4 +1,4 @@
-<div class="container task-index">
+<div class="task-index">
 
   <div class="page-header">
     <div class="row">
@@ -15,23 +15,25 @@
         </span>
       </div>
     </div>
-      <%=
-        crumbs([
-                {:name => "Projects", :link => "/projects"},
-                {:name => @project.name, :link => "/projects/#{@project.id}"},
-                {:name => "Tasks", :link => "active"}
-              ])
-       %>
   </div>
 
-  <table class="table">
-    <thead>
+  <%=
+    crumbs([
+            {:name => "Projects", :link => "/projects"},
+            {:name => @project.name, :link => "/projects/#{@project.id}"},
+            {:name => "Tasks", :link => "active"}
+          ])
+  %>
 
+  <br>
+
+  <table class="table">
+
+    <thead>
       <tr>
         <th><%= sortable("description") %></th>
         <th class="text-center"><%= sortable("complete") %></th>
         <th class="text-center"><%= sortable("due_date") %></th>
-        <th></th>
         <th></th>
       </tr>
     </thead>
@@ -76,7 +78,5 @@
       <% end %>
     </tbody>
   </table>
-
-  <br>
 
 </div>

@@ -1,16 +1,15 @@
-<div class="container ">
+<div class="new-task">
 
 
-  <h1>New task</h1>
-  <%=
-    crumbs([
-            {:name => "Tasks", :link => "/projects/#{@project.id}/tasks"},
-            {:name => "New Task", :link => "active"}
-          ])
+  <h1 class="page-header">New task</h1>
 
-   %>
+  <%= crumbs([ {:name => "Tasks", :link => "/projects/#{@project.id}/tasks"},
+               {:name => "New Task", :link => "active"} ]) %>
+
+  <br><br>
 
   <%= render 'form' %>
 
-  <%= link_to 'Back', project_tasks_path(@project) %>
+  <br><br>
+
 </div>

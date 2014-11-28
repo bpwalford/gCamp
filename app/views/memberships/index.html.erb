@@ -52,7 +52,6 @@
   </div>
 
 
-
   <div class="row">
     <div class="col-md-6">
     <!-- form for changing current member status -->
@@ -60,7 +59,7 @@
         <div class="current-members form-inline row">
           <%= form_for [@project, member] do |f| %>
             <!-- output members name -->
-            <div class="col-md-4 name">
+            <div class="col-md-3 name">
               <%= member.user.full_name %>
             </div>
             <!-- select member status -->
@@ -90,4 +89,4 @@
     </div>
   </div>
 
-</div> <!-- end of container -->
+</div>

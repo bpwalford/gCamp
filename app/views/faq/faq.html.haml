@@ -1,10 +1,10 @@
-.container
+.faq-container
   .row.faq-large-buffer
     .col-md-12
       %h1.faq-large-buffer Frequently Asked Questions
       -@questions.each do |item|
         %h4.faq-small-buffer=link_to(item.question, faqPage_path( :anchor => item.identity))
-.container
+.faq-container
   -@questions.each do |item|
     .row.col-md-12.faq-large-buffer{:id => item.identity}
       %h4.faq-small-buffer= item.question

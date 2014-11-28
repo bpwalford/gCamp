@@ -1,17 +1,15 @@
-<class="container">
+<div class="edit-task">
 
-  <h1>Edit task</h1>
+  <h1 class="page-header">Edit task</h1>
 
-    <%=
-      crumbs([
-              {:name => "#{@project.name}", :link => "/projects/#{@project.id}"},
-              {:name => @task.description, :link => "/projects/#{@project.id}/tasks/#{@task.id}"},
-              {:name => "Edit", :link => "active"}
-            ])
-     %>
+  <%=
+    crumbs([
+            {:name => "#{@project.name}", :link => "/projects/#{@project.id}"},
+            {:name => @task.description, :link => "/projects/#{@project.id}/tasks/#{@task.id}"},
+            {:name => "Edit", :link => "active"}
+          ])
+   %>
 
   <%= render 'form' %>
 
-  <%= link_to 'Show', project_task_path(@project, @task) %> |
-  <%= link_to 'Back', project_tasks_path %>
 </div>
