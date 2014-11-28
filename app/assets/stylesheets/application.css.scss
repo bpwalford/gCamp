@@ -46,15 +46,17 @@
 
 // about page
 
-.about-discription {
-  margin-top: 1%;
-  margin-bottom: 3%;
-}
+.about-page {
 
-.about-bottom-buffer {
-  margin-bottom: 3%;
-}
+  p {
+    margin-bottom: 10px;
+    font-size: 18px;
+  }
 
+  img {
+    width: 100%;
+  }
+}
 
 // terms page
 
