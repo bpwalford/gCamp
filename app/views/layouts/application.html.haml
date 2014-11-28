@@ -23,33 +23,31 @@
 
     -# page content
     .container.page-top-buffer
-      .container
-        - if notice != nil
-          %p#notice.alert.alert-success.col-md-12.text-center=notice
+      - if notice != nil
+        %p#notice.alert.alert-success.col-md-12.text-center=notice
       =yield
 
       .row
         .col-md-12.footer-content
-          .container
-            %hr
-            .footer
-              %p.col-md-6
-                =link_to_unless_current( "About", aboutPage_path)
-                |
-                =link_to_unless_current( "Terms", termsPage_path)
-                |
-                =link_to_unless_current( "FAQ", faqPage_path)
-                |
-                =link_to_unless_current( "Users", users_path)
-                |
-                =link_to_unless_current( "Projects", projects_path)
-              .col-md-6
-                .pull-right
-                  =link_to "https://github.com/bpwalford" do
-                    =image_tag("github.png", class: "footer-link-image")
-                  =link_to "https://twitter.com/bpwalford" do
-                    =image_tag("twitter.png", class: "footer-link-image")
-                  =link_to "https://www.linkedin.com/profile/view?id=375930947&trk=nav_responsive_tab_profile_pic" do
-                    =image_tag("linked_in.png", class: "footer-link-image")
-                  =link_to "http://www.galvanize.it/school/#main" do
-                    =image_tag("gschool.png", class: "footer-link-image2")
+          %hr
+          .footer
+            %p.col-md-6
+              =link_to_unless_current( "About", aboutPage_path)
+              |
+              =link_to_unless_current( "Terms", termsPage_path)
+              |
+              =link_to_unless_current( "FAQ", faqPage_path)
+              |
+              =link_to_unless_current( "Users", users_path)
+              |
+              =link_to_unless_current( "Projects", projects_path)
+            .col-md-6
+              .pull-right
+                =link_to "https://github.com/bpwalford" do
+                  =image_tag("github.png", class: "footer-link-image")
+                =link_to "https://twitter.com/bpwalford" do
+                  =image_tag("twitter.png", class: "footer-link-image")
+                =link_to "https://www.linkedin.com/profile/view?id=375930947&trk=nav_responsive_tab_profile_pic" do
+                  =image_tag("linked_in.png", class: "footer-link-image")
+                =link_to "http://www.galvanize.it/school/#main" do
+                  =image_tag("gschool.png", class: "footer-link-image2")
