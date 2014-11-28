@@ -1,19 +1,20 @@
 <div class="container task-index">
 
-  <div class="page-header row">
-    <h1 class="col-md-7">Tasks</h1>
-    <div class="col-md-2 tasks-sort-links">
-      <%= link_to_unless params[:sort] == "all", 'All', project_tasks_path(@project, sort: :all, tableSort: :description) %>
-      |
-      <%= link_to_unless !params[:sort] || params[:sort] == "incomplete", 'Incomplete', project_tasks_path(@project), sort: :incomplete, tableSort: :description %>
+  <div class="page-header">
+    <div class="row">
+      <h1 class="col-md-7">Tasks</h1>
+      <div class="col-md-2 tasks-sort-links">
+        <%= link_to_unless params[:sort] == "all", 'All', project_tasks_path(@project, sort: :all, tableSort: :description) %>
+        |
+        <%= link_to_unless !params[:sort] || params[:sort] == "incomplete", 'Incomplete', project_tasks_path(@project), sort: :incomplete, tableSort: :description %>
+      </div>
+      <div class="col-md-3 tasks-create-button">
+        <span class="pull-right">
+          <%= link_to 'Download CSV', project_tasks_path(@project), format: "csv", class: "btn btn-info" %>
+          <%= link_to 'Create Task', new_project_task_path(@project), class: "btn btn-info" %>
+        </span>
+      </div>
     </div>
-    <div class="col-md-3 tasks-create-button">
-      <span class="pull-right">
-        <%= link_to 'Download CSV', project_tasks_path(@project), format: "csv", class: "btn btn-info" %>
-        <%= link_to 'Create Task', new_project_task_path(@project), class: "btn btn-info" %>
-      </span>
-    </div>
-    <div class="container">
       <%=
         crumbs([
                 {:name => "Projects", :link => "/projects"},
@@ -21,7 +22,6 @@
                 {:name => "Tasks", :link => "active"}
               ])
        %>
-    </div>
   </div>
 
   <table class="table">

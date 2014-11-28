@@ -1,25 +1,26 @@
-<div class="container ">
-  <div class="page-header row">
+<div class="container">
 
-    <h1 class="col-md-9"><%= @project.name %></h1>
+  <div class="page-header">
+    <div class="row">
+      <h1 class="col-md-10"><%= @project.name %></h1>
 
-    <div class="col-md-3 tasks-create-button pull-right">
-      <span class="pull-right">
-        <%= link_to 'Edit', edit_project_path(@project), class: "btn btn-info" %>
-        <%= link_to 'Destroy', project_path, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger"%>
-      </span>
+      <div class="col-md-2 tasks-create-button">
+        <span class="pull-right">
+          <%= link_to 'Edit', edit_project_path(@project), class: "btn btn-info" %>
+          <%= link_to 'Destroy', project_path, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger"%>
+        </span>
+      </div>
     </div>
 
-    <div class="container">
       <%=
         crumbs([
                 {:name => "Projects", :link => "/projects"},
                 {:name => "#{@project.name}", :link => "active"}
               ])
        %>
-    </div>
 
   </div>
+
 
   <div>
     <% if @project.tasks.length == 1 %>
