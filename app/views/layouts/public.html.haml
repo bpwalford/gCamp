@@ -37,6 +37,9 @@
               =link_to_unless_current( "Terms", termsPage_path)
               |
               =link_to_unless_current( "FAQ", faqPage_path)
+              -if current_user
+                |
+                =link_to_unless_current( "My Projects", projects_path)
             .col-md-6
               .pull-right
                 =link_to "https://github.com/bpwalford" do

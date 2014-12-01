@@ -12,7 +12,7 @@
     .navbar.navbar-inverse.navbar-fixed-top{:role => "navigation"}
       .container
         .navbar-header
-          = link_to "gCamp", home_path, class: "navbar-brand"
+          = link_to "gCamp", projects_path, class: "navbar-brand"
         %ul.nav.navbar-nav.pull-right
           -if !current_user
             %li= link_to "Sign Up", signup_path
@@ -31,17 +31,13 @@
         .col-md-12.footer-content
           %hr
           .footer
-            %p.col-md-6
+            %p.col-md-6.col-md-offset-3.text-center
               =link_to_unless_current( "About", aboutPage_path)
               |
               =link_to_unless_current( "Terms", termsPage_path)
               |
               =link_to_unless_current( "FAQ", faqPage_path)
-              |
-              =link_to_unless_current( "Users", users_path)
-              |
-              =link_to_unless_current( "Projects", projects_path)
-            .col-md-6
+            .col-md-3
               .pull-right
                 =link_to "https://github.com/bpwalford" do
                   =image_tag("github.png", class: "footer-link-image")
