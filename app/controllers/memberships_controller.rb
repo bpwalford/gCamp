@@ -2,9 +2,13 @@ class MembershipsController < ApplicationController
   before_action :ensure_user, :set_project
 
   def index
-    check_project_ownership
+    # check_project_ownership
     @membership = @project.memberships.new
     @memberships = @project.memberships.all
+  end
+
+  def member_index
+
   end
 
   def create

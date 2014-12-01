@@ -14,4 +14,9 @@ class User < ActiveRecord::Base
     self.first_name + ' ' + self.last_name
   end
 
+  def owner?(project)
+    @membership = self.memberships.find_by(project: project)
+    @membership.status != 'owner' ? false : true
+  end
+
 end
