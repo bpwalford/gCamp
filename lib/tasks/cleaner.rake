@@ -15,6 +15,8 @@ namespace :cleaner do
 
     Comment.where.not(task_id: Task.all).delete_all
 
+    Comment.where.not(user_id: User.all).each {|c| c.user = nil}
+
   end
 
 end

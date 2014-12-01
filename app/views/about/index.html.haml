@@ -21,6 +21,10 @@
   .row
     .col-md-12
       %p
-        ="#{Project.all.length} Projects, #{Task.all.length} Tasks, #{Membership.all.length} Project Members, #{User.all.length} Users, #{Comment.all.length} Comments"
+        ="#{pluralize(Project.all.length, 'Project')}"
+        ="#{pluralize(Task.all.length, 'Task')}"
+        ="#{pluralize(Membership.all.length, 'Project Member')}"
+        ="#{pluralize(User.all.length, 'User')}"
+        ="#{pluralize(Comment.all.length, 'Comment')}"
   %br
   %br
