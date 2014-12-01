@@ -6,7 +6,7 @@ class SessionsController < ApplicationController
       session[:user_id] = user.id
       redirect_to home_path
     else
-      redirect_to signin_path, flash: {error: "Username / password combination invalid"}
+      redirect_to signin_path(invalid: true), flash: {error: "Username / password combination invalid"}
     end
   end
 

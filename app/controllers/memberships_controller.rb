@@ -1,8 +1,5 @@
 class MembershipsController < ApplicationController
-
-  before_action do
-    @project = Project.find(params[:project_id])
-  end
+  before_action :ensure_user, :set_project
 
   def index
     @membership = @project.memberships.new
@@ -10,7 +7,6 @@ class MembershipsController < ApplicationController
   end
 
   def create
-
     @membership = @project.memberships.new(set_params)
 
     if @membership.save
@@ -36,8 +32,14 @@ class MembershipsController < ApplicationController
     redirect_to project_memberships_path(@project), notice: @membership.user.full_name + ' was removed successfully'
   end
 
+  private
+
   def set_params
     params.require(:membership).permit(:user_id, :project_id, :status)
+  end
+
+  def set_project
+    @project = Project.find(params[:project_id])
   end
 
 end

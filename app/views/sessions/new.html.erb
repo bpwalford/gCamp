@@ -4,7 +4,7 @@
 
     <h3>Sign into gCamp</h3><br>
 
-    <% if flash.any? %>
+    <% if flash.any? && params[:invalid] %>
       <div class="alert alert-danger">
         <%= flash[:error] %>
       </div>

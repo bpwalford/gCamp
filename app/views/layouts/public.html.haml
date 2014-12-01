@@ -1,0 +1,49 @@
+!!!
+%html{:lang => "en"}
+  %head
+    %title gCamp
+    = stylesheet_link_tag    'application', media: 'all'
+    = javascript_include_tag 'application'
+    = csrf_meta_tags
+
+  %body.full
+
+    -# navigation bar
+    .navbar.navbar-inverse.navbar-fixed-top{:role => "navigation"}
+      .container
+        .navbar-header
+          = link_to "gCamp", home_path, class: "navbar-brand"
+        %ul.nav.navbar-nav.pull-right
+          -if !current_user
+            %li= link_to "Sign Up", signup_path
+            %li= link_to "Sign In", signin_path
+          -else
+            %li= link_to current_user.full_name, user_path(current_user)
+            %li= link_to "Sign Out", signout_path
+
+    -# page content
+    .container.page-top-buffer
+      - if notice != nil
+        %p#notice.alert.alert-success.col-md-12.text-center=notice
+      =yield
+
+      .row
+        .col-md-12.footer-content
+          %hr
+          .footer
+            %p.col-md-6
+              =link_to_unless_current( "About", aboutPage_path)
+              |
+              =link_to_unless_current( "Terms", termsPage_path)
+              |
+              =link_to_unless_current( "FAQ", faqPage_path)
+            .col-md-6
+              .pull-right
+                =link_to "https://github.com/bpwalford" do
+                  =image_tag("github.png", class: "footer-link-image")
+                =link_to "https://twitter.com/bpwalford" do
+                  =image_tag("twitter.png", class: "footer-link-image")
+                =link_to "https://www.linkedin.com/profile/view?id=375930947&trk=nav_responsive_tab_profile_pic" do
+                  =image_tag("linked_in.png", class: "footer-link-image")
+                =link_to "http://www.galvanize.it/school/#main" do
+                  =image_tag("gschool.png", class: "footer-link-image2")

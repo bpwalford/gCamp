@@ -1,7 +1,5 @@
 class TasksController < ApplicationController
-  before_action do
-    @project = Project.find(params[:project_id])
-  end
+  before_action :ensure_user, :set_project
   before_action :set_task, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -71,6 +69,10 @@ class TasksController < ApplicationController
   private
     def set_task
       @task = @project.tasks.find(params[:id])
+    end
+
+    def set_project
+      @project = Project.find(params[:project_id])
     end
 
     def task_params
