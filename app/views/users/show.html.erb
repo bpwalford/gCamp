@@ -21,7 +21,7 @@
     <p class="col-md-2"><%= @user.last_name %></p>
   </div>
 
-  <% if current_user == @user %>
+  <% if current_user == @user || friend?(@user) %>
     <div class="row">
       <p class="col-md-2 user-info"><strong>Email:</strong></p>
       <p class="col-md-2"><%= mail_to @user.email %></p>

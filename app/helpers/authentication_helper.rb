@@ -34,4 +34,15 @@ module AuthenticationHelper
     end
   end
 
+  def friend?(user)
+    if current_user.projects.count > 0
+      current_user.projects.each do |project|
+        if project.users.include?(user)
+          return true
+        end
+      end
+      false
+    end
+  end
+
 end
