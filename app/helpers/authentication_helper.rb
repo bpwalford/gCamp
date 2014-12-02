@@ -12,14 +12,14 @@ module AuthenticationHelper
 
   def check_user_projects
     if !current_user.projects.include?(@project)
-      render file: 'public/404.html', status: :not_found, layout: false
+      raise AccessDenied
     end
   end
 
   def check_project_ownership
     @membership = current_user.memberships.find_by(project: @project)
     if @membership.status == 'member'
-      render file: 'public/404.html', status: :not_found, layout: false
+      raise AccessDenied
     end
   end
 

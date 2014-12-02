@@ -1,91 +1,82 @@
-<div class="members-page">
+<%= crumbs([ {:name => "Projects", :link => "/projects"},
+           {:name => "#{@project.name}", :link => "/projects/#{@project.id}"},
+           {:name => "Memberships", :link => "active"} ]) %>
 
-  <!-- header and breadcrumbs -->
-  <div class="page-header">
-    <h1><%= @project.name %>: Manage Members</h1>
-  </div>
+<br>
 
-  <%= crumbs([ {:name => "Projects", :link => "/projects"},
-             {:name => "#{@project.name}", :link => "/projects/#{@project.id}"},
-             {:name => "Memberships", :link => "active"} ]) %>
-
-  <br>
-
-  <!-- error messages -->
-  <% if @membership.errors.any? %>
-    <div class="row">
-      <div class="col-md-4">
-        <div class="alert alert-danger">
-          <h5><%= pluralize(@membership.errors.count, "error") %> prohibited this task from being saved:</h5>
-          <ul>
-            <% @membership.errors.full_messages.each do |message| %>
-            <li><%= message %></li>
-            <% end %>
-          </ul>
-        </div>
+<!-- error messages -->
+<% if @membership.errors.any? %>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="alert alert-danger">
+        <h5><%= pluralize(@membership.errors.count, "error") %> prohibited this task from being saved:</h5>
+        <ul>
+          <% @membership.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+          <% end %>
+        </ul>
       </div>
     </div>
-  <% end %>
+  </div>
+<% end %>
 
-  <!-- form for new member of project -->
-  <div class="row">
-    <div class="col-md-5">
-      <div class="new-member-form form-inline well">
-        <%= form_for [@project, @membership] do |f| %>
-          <!-- select user -->
-          <div class="form-group">
-            <%= f.collection_select( :user_id, User.all, :id, :full_name,
-              {include_blank: 'please select a user'}, {class: 'form-control'}) %>
+<!-- form for new member of project -->
+<div class="row">
+  <div class="col-md-5">
+    <div class="new-member-form form-inline well">
+      <%= form_for [@project, @membership] do |f| %>
+        <!-- select user -->
+        <div class="form-group">
+          <%= f.collection_select( :user_id, User.all, :id, :full_name,
+            {include_blank: 'please select a user'}, {class: 'form-control'}) %>
+        </div>
+        <!-- select user status -->
+        <div class="form-group middle-select">
+          <%= f.select( :status, options_for_select(%w[member owner]), {}, {class: 'form-control'}) %>
+        </div>
+        <!-- submit -->
+        <div class="pull-right">
+          <%= f.submit  "Add New Member", class: 'btn btn-primary pull-right' %>
+        </div>
+      <% end %> <!-- end of form_for -->
+    </div>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="col-md-6">
+  <!-- form for changing current member status -->
+    <% @memberships.each do |member| %>
+      <div class="current-members form-inline row">
+        <%= form_for [@project, member] do |f| %>
+          <!-- output members name -->
+          <div class="col-md-3 name">
+            <%= member.user.full_name %>
           </div>
-          <!-- select user status -->
-          <div class="form-group middle-select">
-            <%= f.select( :status, options_for_select(%w[member owner]), {}, {class: 'form-control'}) %>
+          <!-- select member status -->
+          <div class="col-md-2">
+            <% if member.status == "member" %>
+              <%= f.select( :status, options_for_select(%w[owner]),
+                {include_blank: member.status}, {class: 'form-control'}) %>
+            <% else %>
+              <%= f.select( :status, options_for_select(%w[member]),
+                {include_blank: member.status}, {class: 'form-control'}) %>
+            <% end %>
           </div>
-          <!-- submit -->
-          <div class="pull-right">
-            <%= f.submit  "Add New Member", class: 'btn btn-primary pull-right' %>
+          <!-- update member status -->
+          <div class="col-md-3">
+            <%= f.submit "Update", class: "btn btn-primary pull-right" %>
           </div>
+          <!-- remove member from project -->
+          <div class="col-md-2 delete-x">
+            <%= link_to( content_tag(:span, "", class: "glyphicon glyphicon-remove"),
+              project_membership_path(@project, member), method: :delete,
+                data: {confirm: "Are you sure you want to remove #{member.user.first_name} from #{@project.name}?"}) %>
+          </div>
+
         <% end %> <!-- end of form_for -->
       </div>
-    </div>
+    <% end %> <!-- end of @memberships.each -->
   </div>
-
-
-  <div class="row">
-    <div class="col-md-6">
-    <!-- form for changing current member status -->
-      <% @memberships.each do |member| %>
-        <div class="current-members form-inline row">
-          <%= form_for [@project, member] do |f| %>
-            <!-- output members name -->
-            <div class="col-md-3 name">
-              <%= member.user.full_name %>
-            </div>
-            <!-- select member status -->
-            <div class="col-md-2">
-              <% if member.status == "member" %>
-                <%= f.select( :status, options_for_select(%w[owner]),
-                  {include_blank: member.status}, {class: 'form-control'}) %>
-              <% else %>
-                <%= f.select( :status, options_for_select(%w[member]),
-                  {include_blank: member.status}, {class: 'form-control'}) %>
-              <% end %>
-            </div>
-            <!-- update member status -->
-            <div class="col-md-3">
-              <%= f.submit "Update", class: "btn btn-primary pull-right" %>
-            </div>
-            <!-- remove member from project -->
-            <div class="col-md-2 delete-x">
-              <%= link_to( content_tag(:span, "", class: "glyphicon glyphicon-remove"),
-                project_membership_path(@project, member), method: :delete,
-                  data: {confirm: "Are you sure you want to remove #{member.user.first_name} from #{@project.name}?"}) %>
-            </div>
-
-          <% end %> <!-- end of form_for -->
-        </div>
-      <% end %> <!-- end of @memberships.each -->
-    </div>
-  </div>
-
 </div>
