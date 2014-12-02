@@ -29,6 +29,23 @@
   margin-top: 80px;
 }
 
+.navbar {
+  .inverse-dropdown{
+    background-color: #222;
+    border-color: #080808;
+    &>li>a{
+      color: #999;
+      &:hover{
+        color: #fff;
+        background-color: #000;
+      }
+    }
+    .divider {
+      background-color: #999;
+    }
+  }
+}
+
 // home page
 
 .panel-image {

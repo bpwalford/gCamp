@@ -13,6 +13,18 @@
       .container
         .navbar-header
           = link_to "gCamp", projects_path, class: "navbar-brand"
+        %ul.nav.navbar-nav
+          %li.dropdown
+            %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+              My Projects
+              %span.caret
+            %ul.inverse-dropdown.dropdown-menu{:role => "menu"}
+              -current_user.projects.each do |project|
+                %li= link_to project.name, project_path(project)
+              %li.divider
+              %li
+                = link_to "New Project", new_project_path
+          %li= link_to "Users", users_path
         %ul.nav.navbar-nav.pull-right
           -if !current_user
             %li= link_to "Sign Up", signup_path
