@@ -63,10 +63,14 @@
             <%= f.submit "Update", class: "btn btn-primary pull-right" %>
           </div>
           <!-- remove member from project -->
-          <div class="col-md-2 delete-x">
-            <%= link_to( content_tag(:span, "", class: "glyphicon glyphicon-remove"),
-              project_membership_path(@project, member), method: :delete,
-                data: {confirm: "Are you sure you want to remove #{member.user.first_name} from #{@project.name}?"}) %>
+          <div class="delete-x">
+            <% if @project.memberships.count > 1 %>
+              <%= link_to( content_tag(:span, "", class: "glyphicon glyphicon-remove"),
+                project_membership_path(@project, member), method: :delete,
+                  data: {confirm: "Are you sure you want to remove #{member.user.first_name} from #{@project.name}?"}) %>
+            <% else %>
+              <p>You are the last member</p>
+            <% end %>
           </div>
 
         <% end %> <!-- end of form_for -->
