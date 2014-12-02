@@ -4,6 +4,12 @@
     <h1><%= @project.name %>: Manage Members</h1>
   </div>
 
+  <%= crumbs([ {:name => "Projects", :link => "/projects"},
+    {:name => "#{@project.name}", :link => "/projects/#{@project.id}"},
+    {:name => "Memberships", :link => "active"} ]) %>
+
+  <br>
+
   <%= if current_user.owner?(@project)
         render 'owner_index.html.erb'
       else

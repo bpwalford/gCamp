@@ -5,9 +5,6 @@ class ApplicationController < ActionController::Base
 
   include AuthenticationHelper
 
-  class AccessDenied < StandardError
-  end
-
   rescue_from AccessDenied, with: :four_o_four
 
   def four_o_four

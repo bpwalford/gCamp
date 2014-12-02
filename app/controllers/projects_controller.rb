@@ -1,13 +1,13 @@
 class ProjectsController < ApplicationController
   before_action :ensure_user
   before_action :set_project, only: [:show, :edit, :update, :destroy]
+  before_action :check_user_projects, only: [:show, :destroy]
 
   def index
     @projects = current_user.projects.all
   end
 
   def show
-    check_user_projects
   end
 
   def new
@@ -30,11 +30,9 @@ class ProjectsController < ApplicationController
   end
 
   def edit
-    check_project_ownership
   end
 
   def update
-    check_project_ownership
     if @project.update(project_params)
       redirect_to project_path(@project), notice: 'Project was successfully updated.'
     else
@@ -43,7 +41,6 @@ class ProjectsController < ApplicationController
   end
 
   def destroy
-    check_user_projects
     @project.destroy
     redirect_to projects_path, notice: 'Project was successfully deleted.'
   end

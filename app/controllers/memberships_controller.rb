@@ -1,10 +1,11 @@
 class MembershipsController < ApplicationController
-  before_action :ensure_user, :set_project
+  before_action :ensure_user, :set_project, :check_user_projects
+  before_action :check_project_ownership, only: [:create, :update, :destroy]
 
   def index
-    # check_project_ownership
     @membership = @project.memberships.new
     @memberships = @project.memberships.all
+    @current_membership = current_user.memberships.find_by(project: @project)
   end
 
   def member_index
@@ -12,7 +13,6 @@ class MembershipsController < ApplicationController
   end
 
   def create
-    check_project_ownership
     @membership = @project.memberships.new(set_params)
 
     if @membership.save
@@ -24,7 +24,6 @@ class MembershipsController < ApplicationController
   end
 
   def update
-    check_project_ownership
     @membership = Membership.find(params[:id])
     if @membership.update(set_params)
       redirect_to project_memberships_path(@project), notice: @membership.user.full_name + ' was successfully updated.'
@@ -34,10 +33,14 @@ class MembershipsController < ApplicationController
   end
 
   def destroy
-    check_project_ownership
     @membership = Membership.find(params[:id])
-    @membership.destroy
-    redirect_to project_memberships_path(@project), notice: @membership.user.full_name + ' was removed successfully'
+    if current_user == @membership.user
+      @membership.destroy
+      redirect_to projects_path, notice: "You have successfully eliminated your membership to #{@project.name}"
+    else
+      @membership.destroy
+      redirect_to project_memberships_path(@project), notice: @membership.user.full_name + ' was removed successfully'
+    end
   end
 
   private
