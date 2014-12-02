@@ -27,6 +27,13 @@ module AuthenticationHelper
 
   def check_project_ownership
     @membership = current_user.memberships.find_by(project: @project)
+    if @membership.status == 'member'
+      raise AccessDenied
+    end
+  end
+
+  def check_project_membership
+    @membership = current_user.memberships.find_by(project: @project)
     unless current_user == @membership.user
       if @membership.status == 'member'
         raise AccessDenied

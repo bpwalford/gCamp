@@ -1,6 +1,6 @@
 class MembershipsController < ApplicationController
   before_action :ensure_user, :set_project, :check_user_projects
-  before_action :check_project_ownership, only: [:create, :update, :destroy]
+  before_action :check_project_membership, only: [:create, :update, :destroy]
 
   def index
     @membership = @project.memberships.new
