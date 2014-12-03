@@ -1,4 +1,4 @@
-class RegisterController < ApplicationController
+class RegisterController < PublicController
 
   def new
     @user = User.new

@@ -15,8 +15,10 @@ class User < ActiveRecord::Base
   end
 
   def owner?(project)
-    @membership = self.memberships.find_by(project: project)
-    @membership.status != 'owner' ? false : true
+    unless admin?
+      @membership = self.memberships.find_by(project: project)
+      @membership.status != 'owner' ? false : true
+    end
   end
 
 end

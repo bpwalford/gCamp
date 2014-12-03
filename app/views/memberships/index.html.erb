@@ -10,7 +10,7 @@
 
   <br>
 
-  <%= if current_user.owner?(@project)
+  <%= if current_user.owner?(@project) || admin?
         render 'owner_index.html.erb'
       else
         render 'member_index.html.erb'

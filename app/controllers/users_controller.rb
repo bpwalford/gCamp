@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_action :ensure_user
-  before_action :check_user, only: [:edit, :update, :destroy]
   before_action :set_user, only: [:edit, :update, :show, :destroy]
+  before_action :check_user, only: [:edit, :update, :destroy]
 
   def index
     @users = User.all
@@ -25,7 +25,6 @@ class UsersController < ApplicationController
     else
       render :new
     end
-
   end
 
   def update
@@ -37,10 +36,8 @@ class UsersController < ApplicationController
   end
 
   def destroy
-
     @user.destroy
     redirect_to users_path, notice: 'User was successfully deleted'
-
   end
 
   private
@@ -50,7 +47,11 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation)
+    if admin?
+      params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation, :admin)
+    else
+      params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation)
+    end
   end
 
 end

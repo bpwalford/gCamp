@@ -36,6 +36,15 @@
     </div>
   <% end %>
 
+  <% if admin? %>
+    <div class="field form-group row">
+      <%= f.label :admin, :class => 'col-md-2' %>
+      <div class="col-md-2">
+        <%= f.check_box :admin %>
+      </div>
+    </div>
+  <% end %>
+
   <div class="actions form-group">
     <div class="col-md-2 col-md-offset-2">
       <%= f.submit class: 'btn btn-primary'%>

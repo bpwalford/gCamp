@@ -5,7 +5,7 @@ class ProjectsController < ApplicationController
   before_action :check_project_ownership, only: [:edit, :update, :destroy]
 
   def index
-    @projects = current_user.projects.all
+    admin? ? @projects = Project.all : @projects = current_user.projects.all
   end
 
   def show

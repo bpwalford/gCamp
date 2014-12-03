@@ -5,7 +5,15 @@ Task.delete_all
 Membership.delete_all
 Comment.delete_all
 
-25.times do
+User.create!(
+  first_name: Faker::Name.first_name,
+  last_name: Faker::Name.last_name,
+  email: 'admin@example.com',
+  password: 'pass',
+  admin: true,
+)
+
+60.times do
   password = rand(1..1000)
   User.create! first_name: Faker::Name.first_name,
               last_name: Faker::Name.last_name,
@@ -18,12 +26,10 @@ end
 
 
 10.times do
-
   project = Project.create name: Faker::App.name
 
 
   rand(1..15).times do
-
     description = Faker::Lorem.sentence(5)
     description = description.split
 
@@ -34,16 +40,24 @@ end
     )
 
     project.tasks.append(task)
-
   end
 
-  rand(1..15).times do
+  rand(1..3).times do
+    user = User.all.sample
+    if !project.users.include?(user)
+      Membership.create!(
+        user: user,
+        project: project,
+        status: 'owner',
+      )
+    end
+  end
 
+  rand(3..10).times do
     user = User.all.sample
     if !project.users.include?(user)
       project.users.append(user)
     end
-
   end
 
 end
