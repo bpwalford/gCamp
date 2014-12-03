@@ -4,7 +4,11 @@ class SessionsController < PublicController
     user = User.find_by(email: params[:session][:email].downcase)
     if user && user.authenticate(params[:session][:password])
       session[:user_id] = user.id
-      redirect_to projects_path
+      if params[:session][:attempt]
+        redirect_to params[:session][:attempt]
+      else
+        redirect_to projects_path
+      end
     else
       redirect_to signin_path(invalid: true), flash: {error: "Username / password combination invalid"}
     end
