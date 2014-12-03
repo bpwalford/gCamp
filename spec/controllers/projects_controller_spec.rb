@@ -98,6 +98,44 @@ describe ProjectsController do
 
   describe '#edit' do
 
+    before do
+      @member = create_user
+      @owner = create_user
+      @project = create_project
+      @membership = create_membership(
+        user: @member,
+        project: @project,
+      )
+      @ownership = create_membership(
+        user: @owner,
+        project: @project,
+        status: 'owner'
+      )
+    end
+
+    context 'invalid access attempts' do
+      it 'renders 404 if not an owner' do
+        session[:user_id] = @member.id
+        get :edit, id: @project
+        expect(response.status).to eq(404)
+      end
+
+      it 'renders 404 if not a member' do
+        foreign = create_user
+        session[:user_id] = foreign.id
+        get :edit, id: @project.id
+        expect(response.status).to eq(404)
+      end
+    end
+
+    context 'valid access attempts' do
+      it 'renders edit view if you are an owner' do
+        session[:user_id] = @owner
+        get :edit, id: @project.id
+        expect(response).to render_template('edit')
+      end
+    end
+
   end
 
   describe '#update' do
@@ -124,7 +162,14 @@ describe ProjectsController do
     end
 
     context 'invalid attempts to edit' do
-      it 'renders 404 if you are not an owner' do
+      it 'renders 404 if you a not associated' do
+        foreign = create_user
+        session[:user_id] = foreign.id
+        get :update, @different
+        expect(response.status).to eq(404)
+      end
+
+      it 'renders 404 if you are a member' do
         session[:user_id] = @member.id
         put :update, @different
         expect(response.status).to eq(404)
