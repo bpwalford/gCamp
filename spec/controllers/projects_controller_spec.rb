@@ -25,18 +25,30 @@ describe ProjectsController do
       )
     end
 
-    it 'renders the show view for user projects' do
-      session[:user_id] = @user.id
-      get :show, id: @project.id
-      expect(response).to render_template('show')
+    context 'invalid requests to view' do
+      it 'renders 404 if user is not member' do
+        @other = create_user
+        session[:user_id] = @other.id
+        get :show, id: @project.id
+        expect(response.status).to eq(404)
+      end
     end
 
-    it 'renders 404 if user is not member' do
-      @other = create_user
-      session[:user_id] = @other.id
-      get :show, id: @project.id
-      expect(response.status).to eq(404)
+    context 'valid requests to view' do
+      it 'renders the show view for user projects' do
+        session[:user_id] = @user.id
+        get :show, id: @project.id
+        expect(response).to render_template('show')
+      end
+
+      it 'renders the show view for admins' do
+        @admin = create_user(admin: true)
+        session[:user_id] = @admin.id
+        get :show, id: @project.id
+        expect(response).to render_template('show')
+      end
     end
+
 
   end
 
@@ -67,8 +79,7 @@ describe ProjectsController do
         }
       }
       post :create, project
-      project = Project.first
-      expect(response).to redirect_to(project_tasks_path(project))
+      expect(response).to redirect_to(project_tasks_path(Project.first))
     end
 
     it 'renders new on unsuccessful save' do
@@ -84,12 +95,66 @@ describe ProjectsController do
   end
 
 
+
   describe '#edit' do
 
   end
 
-
   describe '#update' do
+
+    before do
+      @member = create_user
+      @owner = create_user
+      @project = create_project
+      @membership = create_membership(
+        user: @member,
+        project: @project,
+      )
+      @ownership = create_membership(
+        user: @owner,
+        project: @project,
+        status: 'owner'
+      )
+      @different = {
+        project: {
+          name: 'different'
+        },
+        id: @project.id
+      }
+    end
+
+    context 'invalid attempts to edit' do
+      it 'renders 404 if you are not an owner' do
+        session[:user_id] = @member.id
+        put :update, @different
+        expect(response.status).to eq(404)
+      end
+    end
+
+    context 'valid attempts to edit' do
+      it 'renders edit on unsuccessful update' do
+        session[:user_id] = @owner
+        different = {
+          project: {
+            name: ''
+          },
+          id: @project.id
+        }
+        get :update, different
+        expect(response).to render_template('edit')
+      end
+      it 'redirects to project path on successful update' do
+        session[:user_id] = @owner.id
+        put :update, @different
+        expect(response).to redirect_to(project_path(Project.first))
+      end
+      it 'redirects to project path when admins update it' do
+        @admin = create_user(admin: true)
+        session[:user_id] = @admin.id
+        put :update, @different
+        expect(response).to redirect_to(project_path(Project.first))
+      end
+    end
 
   end
 
