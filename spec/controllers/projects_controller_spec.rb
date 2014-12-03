@@ -5,8 +5,8 @@ describe ProjectsController do
   describe '#index' do
 
     it 'renders the index view' do
-      @user = create_user
-      session[:user_id] = @user.id
+      user = create_user
+      session[:user_id] = user.id
       get :index
       expect(response).to render_template('index')
     end
@@ -14,9 +14,36 @@ describe ProjectsController do
   end
 
 
+  describe 'show' do
+
+    before do
+      @user = create_user
+      @project = create_project
+      @membership = create_membership(
+        user: @user,
+        project: @project,
+      )
+    end
+
+    it 'renders the show view for user projects' do
+      session[:user_id] = @user.id
+      get :show, id: @project.id
+      expect(response).to render_template('show')
+    end
+
+    it 'renders 404 if user is not member' do
+      @other = create_user
+      session[:user_id] = @other.id
+      get :show, id: @project.id
+      expect(response.status).to eq(404)
+    end
+
+  end
+
+
   describe '#new' do
 
-    it ''
+    # it ''
 
   end
 

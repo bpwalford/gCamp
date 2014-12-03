@@ -16,9 +16,10 @@ module ObjectCreationMethods
     new_user(overrides).tap(&:save!)
   end
 
+
   def new_project(overrides = {})
     defaults = {
-      name: Faker::Company.name
+      name: Faker::Company.name,
     }
     Project.new(defaults.merge(overrides))
   end
@@ -27,7 +28,7 @@ module ObjectCreationMethods
     new_project(overrides).tap(&:save!)
   end
 
-  # task
+
   def new_task(overrides = {})
     defaults = {
       description: Faker::Lorem.sentence(3),
@@ -42,7 +43,18 @@ module ObjectCreationMethods
     new_task(overrides).tap(&:save!)
   end
 
-  # membership
+  def new_membership(overrides = {})
+    defaults = {
+      user: create_user,
+      project: create_project,
+      status: 'member',
+    }
+    Membership.new(defaults.merge(overrides))
+  end
+
+  def create_membership(overrides = {})
+    new_membership(overrides).tap(&:save)
+  end
 
   # comment
 
