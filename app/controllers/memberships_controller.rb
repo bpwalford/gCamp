@@ -8,10 +8,6 @@ class MembershipsController < ApplicationController
     @current_membership = current_user.memberships.find_by(project: @project)
   end
 
-  def member_index
-
-  end
-
   def create
     @membership = @project.memberships.new(set_params)
 

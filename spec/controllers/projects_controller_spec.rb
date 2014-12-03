@@ -43,12 +43,43 @@ describe ProjectsController do
 
   describe '#new' do
 
-    # it ''
+    it 'renders the new project view' do
+      user = create_user
+      session[:user_id] = user.id
+      get :new
+      expect(response).to render_template('new')
+    end
 
   end
 
 
   describe '#create' do
+
+    before do
+      @user = create_user
+      session[:user_id] = @user.id
+    end
+
+    it 'redirects to project tasks on save' do
+      project = {
+        project: {
+          name: 'asdf'
+        }
+      }
+      post :create, project
+      project = Project.first
+      expect(response).to redirect_to(project_tasks_path(project))
+    end
+
+    it 'renders new on unsuccessful save' do
+      project = {
+        project: {
+          name: ''
+        }
+      }
+      post :create, project
+      expect(response).to render_template('new')
+    end
 
   end
 
