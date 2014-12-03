@@ -5,14 +5,12 @@ class ApplicationController < ActionController::Base
 
   include AuthenticationHelper
 
+  before_action :ensure_user
+
   rescue_from AccessDenied, with: :four_o_four
 
   def four_o_four
-    if params[:attempt] == 'true'
-      redirect_to projects_path
-    else
-      render 'public/404', layout: false
-    end
+    render 'public/404', layout: false, status: 404
   end
 
 end

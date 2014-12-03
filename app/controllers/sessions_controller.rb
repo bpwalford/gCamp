@@ -8,7 +8,7 @@ class SessionsController < PublicController
       session[:user_id] = user.id
 
       if params[:session][:attempt] == 'true'
-        redirect_to params[:session][:place]+'?attempt=true'
+        redirect_to params[:session][:place]
       else
         redirect_to projects_path
       end

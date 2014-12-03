@@ -1,5 +1,4 @@
 class UsersController < ApplicationController
-  before_action :ensure_user
   before_action :set_user, only: [:edit, :update, :show, :destroy]
   before_action :check_user, only: [:edit, :update, :destroy]
 
@@ -36,8 +35,14 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    @user.destroy
-    redirect_to users_path, notice: 'User was successfully deleted'
+    if @user == current_user
+      @user.destroy
+      session.clear
+      redirect_to signin_path, notice: 'You have successfully deleted your account'
+    else
+      @user.destroy
+      redirect_to users_path, notice: 'User was successfully deleted'
+    end
   end
 
   private

@@ -1,5 +1,4 @@
 class CommentsController < ApplicationController
-  before_action :ensure_user
 
   def create
     @project = Project.find(params[:project_id])

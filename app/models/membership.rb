@@ -9,7 +9,6 @@ class Membership < ActiveRecord::Base
   before_destroy :check_user_count
 
   def check_user_count
-    binding.pry
     if self.project.memberships.count < 2
       errors.add(:memberships, ", you must have one")
       false

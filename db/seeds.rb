@@ -14,14 +14,11 @@ User.create!(
 )
 
 60.times do
-  password = rand(1..1000)
   User.create! first_name: Faker::Name.first_name,
               last_name: Faker::Name.last_name,
               email: Faker::Internet.email,
-              password: password,
-              password_confirmation: password
-
-
+              password: 'asdf',
+              password_confirmation: 'asdf'
 end
 
 
