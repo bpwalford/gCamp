@@ -25,6 +25,17 @@ describe UsersController do
 
   end
 
+  describe '#show' do
+
+    it 'renders the show page' do
+      user = create_user
+      session[:user_id] = user.id
+      get :show, id: user.id
+      expect(response).to render_template('show')
+    end
+
+  end
+
 
   describe '#create' do
 
