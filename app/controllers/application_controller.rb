@@ -8,7 +8,11 @@ class ApplicationController < ActionController::Base
   rescue_from AccessDenied, with: :four_o_four
 
   def four_o_four
-    render 'public/404', layout: false
+    if params[:attempt] == 'true'
+      redirect_to projects_path
+    else
+      render 'public/404', layout: false
+    end
   end
 
 end

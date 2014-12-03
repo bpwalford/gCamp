@@ -2,10 +2,13 @@ class SessionsController < PublicController
 
   def create
     user = User.find_by(email: params[:session][:email].downcase)
+
     if user && user.authenticate(params[:session][:password])
+
       session[:user_id] = user.id
-      if params[:session][:attempt]
-        redirect_to params[:session][:attempt]
+
+      if params[:session][:attempt] == 'true'
+        redirect_to params[:session][:place]+'?attempt=true'
       else
         redirect_to projects_path
       end

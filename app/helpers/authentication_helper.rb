@@ -13,7 +13,7 @@ module AuthenticationHelper
 
   def ensure_user
     unless current_user
-      redirect_to signin_path(attempt: request.env['PATH_INFO']),
+      redirect_to signin_path(attempt: true, place: request.env['PATH_INFO']),
         notice: 'You must be logged in to access that action'
     end
   end
