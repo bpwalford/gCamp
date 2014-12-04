@@ -41,6 +41,7 @@ module ObjectCreationMethods
   def create_task(overrides = {})
     new_task(overrides).tap(&:save!)
   end
+  
 
   def new_membership(overrides = {})
     defaults = {
@@ -54,7 +55,5 @@ module ObjectCreationMethods
   def create_membership(overrides = {})
     new_membership(overrides).tap(&:save)
   end
-
-  # comment
 
 end
