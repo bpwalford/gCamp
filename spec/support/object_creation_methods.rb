@@ -33,10 +33,9 @@ module ObjectCreationMethods
     defaults = {
       description: Faker::Lorem.sentence(3),
       due_date: Date.today + 1.year,
-      user: create_user,
       project: create_project
     }
-    Task.new(default.merge(overrides))
+    Task.new(defaults.merge(overrides))
   end
 
   def create_task(overrides = {})

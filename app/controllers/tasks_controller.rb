@@ -1,10 +1,8 @@
 class TasksController < ApplicationController
-  before_action :set_project
+  before_action :set_project, :check_user_projects
   before_action :set_task, only: [:show, :edit, :update, :destroy]
 
   def index
-
-    check_user_projects
 
     if params[:sort] == "all"
       @tasks = @project.tasks.order(params[:tableSort])
@@ -37,7 +35,6 @@ class TasksController < ApplicationController
   end
 
   def show
-    check_user_projects
   end
 
   def new
@@ -45,7 +42,6 @@ class TasksController < ApplicationController
   end
 
   def edit
-    check_user_projects
   end
 
   def create
@@ -58,7 +54,6 @@ class TasksController < ApplicationController
   end
 
   def update
-    check_user_projects
     if @task.update(task_params)
       redirect_to project_task_path(@project, @task), notice: 'Tasks was successfully updated.'
     else
@@ -67,7 +62,6 @@ class TasksController < ApplicationController
   end
 
   def destroy
-    check_user_projects
     @task.destroy
     redirect_to project_tasks_path(@project), notice: 'Task was successfully destroyed.'
   end
