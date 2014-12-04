@@ -149,6 +149,51 @@ describe MembershipsController do
 
 
   describe '#destroy' do
+
+    context 'invalid access attempts' do
+      @othership = create_membership(
+        project: @project,
+        user: @other
+      )
+      it 'renders 404 if member deletes other member' do
+        session[:user_id] = @member.id
+        delete :destroy, membership_id: @othership.id
+        expect(response.status).to eq(404)
+      end
+
+      it 'renders 404 if non member/owner/admin deletes' do
+        session[:user_id] = @other.id
+        delete :destroy, membership_id: @usership.id
+        expect(response.status).to eq(404)
+      end
+
+      it 'renders index if the last owner is deleted' do
+        session[:user_id] = @admin.id
+        delete :destroy, membership_id: @ownership.id
+        expect(response).to render_template('index')
+      end
+    end
+
+    context 'valid access attempts' do
+      it 'redirects to index if owner deletes other member' do
+        session[:user_id] = @owner.id
+        delete :destroy, membership_id: @usership.id
+        expect(response).to redirect_to(project_memberships_path(@project))
+      end
+
+      it 'redirects to index if admin deletes member' do
+        session[:user_id] = @admin.id
+        delete :destroy, membership_id: @usership.id
+        expect(response).to redirect_to(project_memberships_path(@project))
+      end
+
+      it 'redirects to projects if member deletes self' do
+        session[:user_id] = @member.id
+        delete :destroy, membership_id: @usership.id
+        expect(response).to redirect_to(project_memberships_path(@project))
+      end
+    end
+
   end
 
 end

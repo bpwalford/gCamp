@@ -34,8 +34,12 @@ class MembershipsController < ApplicationController
       @membership.destroy
       redirect_to projects_path, notice: "You have successfully eliminated your membership to #{@project.name}"
     else
-      @membership.destroy
-      redirect_to project_memberships_path(@project), notice: @membership.user.full_name + ' was removed successfully'
+      if @membership.destroy
+        redirect_to project_memberships_path(@project), notice: @membership.user.full_name + ' was removed successfully'
+      else
+        @memberships = @project.memberships.all
+        render :index
+      end
     end
   end
 
