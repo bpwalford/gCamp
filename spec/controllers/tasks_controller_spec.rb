@@ -160,7 +160,7 @@ describe TasksController do
         post :create, project_id: @project.id, task: @good_task
         expect(response).to redirect_to(project_tasks_path(@project))
       end
-  
+
       it 'redirect to project tasks for owners on successful save' do
         session[:user_id] = @owner.id
         post :create, project_id: @project.id, task: @good_task
@@ -210,18 +210,81 @@ describe TasksController do
 
   describe '#update' do
     context 'invalid access attempts' do
+      it 'renders 404 for non members' do
+        session[:user_id] = @other.id
+        put :update, project_id: @project.id, id: @task.id, task: 'flarp'
+        expect(response.status).to eq(404)
+      end
     end
 
     context 'valid access attempts' do
+
+      it 'renders new for members on unsuccessful save' do
+        session[:user_id] = @user.id
+        put :update, project_id: @project.id, id: @task.id, task: {description: nil}
+        expect(response).to render_template('edit')
+      end
+
+      it 'renders new for owners on unsuccessful save' do
+        session[:user_id] = @owner.id
+        put :update, project_id: @project.id, id: @task.id, task: {description: nil}
+        expect(response).to render_template('edit')
+      end
+
+      it 'renders new for admins on unsuccessful save' do
+        session[:user_id] = @admin.id
+        put :update, project_id: @project.id, id: @task.id, task: {description: nil}
+        expect(response).to render_template('edit')
+      end
+
+      it 'redirect to project tasks for members on successful save' do
+        session[:user_id] = @user.id
+        put :update, project_id: @project.id, id: @task.id, task: {description: 'flarp'}
+        expect(response).to redirect_to(project_task_path(@project, @task))
+      end
+
+      it 'redirect to project tasks for owners on successful save' do
+        session[:user_id] = @owner.id
+        put :update, project_id: @project.id, id: @task.id, task: {description: 'flarp'}
+        expect(response).to redirect_to(project_task_path(@project, @task))
+      end
+
+      it 'redirect to project tasks for admins on successful save' do
+        session[:user_id] = @admin.id
+        put :update, project_id: @project.id, id: @task.id, task: {description: 'flarp'}
+        expect(response).to redirect_to(project_task_path(@project, @task))
+      end
     end
   end
 
 
   describe '#destroy' do
     context 'invalid access attempts' do
+      it 'renders 404 for non members' do
+        session[:user_id] = @other.id
+        delete :destroy, project_id: @project.id, id: @task.id
+        expect(response.status).to eq(404)
+      end
     end
 
     context 'valid access attempts' do
+      it 'renders edit for members' do
+        session[:user_id] = @user.id
+        delete :destroy, project_id: @project.id, id: @task.id
+        expect(response).to redirect_to(project_tasks_path(@project))
+      end
+
+      it 'renders edit for owners' do
+        session[:user_id] = @owner.id
+        delete :destroy, project_id: @project.id, id: @task.id
+        expect(response).to redirect_to(project_tasks_path(@project))
+      end
+
+      it 'renders edit for admins' do
+        session[:user_id] = @admin.id
+        delete :destroy, project_id: @project.id, id: @task.id
+        expect(response).to redirect_to(project_tasks_path(@project))
+      end
     end
   end
 

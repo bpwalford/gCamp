@@ -1,6 +1,6 @@
 class Task < ActiveRecord::Base
 
-  validates_presence_of :description
+  validates_presence_of :description, allow_blank: false
   validate :cant_be_due_in_past, on: :create
 
   belongs_to :project
