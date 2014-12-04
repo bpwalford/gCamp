@@ -2,6 +2,28 @@ require 'rails_helper'
 
 describe ProjectsController do
 
+  before do
+    @user = create_user
+    @owner = create_user
+    @admin = create_user(admin: true)
+    @project = create_project
+    @membership = create_membership(
+    user: @user,
+    project: @project,
+    )
+    @ownership = create_membership(
+    user: @owner,
+    project: @project,
+    status: 'owner'
+    )
+    @different = {
+      project: {
+        name: 'different'
+      },
+      id: @project.id
+    }
+  end
+
   describe '#index' do
 
     it 'renders the index view' do
@@ -15,15 +37,6 @@ describe ProjectsController do
 
 
   describe 'show' do
-
-    before do
-      @user = create_user
-      @project = create_project
-      @membership = create_membership(
-        user: @user,
-        project: @project,
-      )
-    end
 
     context 'invalid requests to view' do
       it 'renders 404 if user is not member' do
@@ -42,7 +55,6 @@ describe ProjectsController do
       end
 
       it 'renders the show view for admins' do
-        @admin = create_user(admin: true)
         session[:user_id] = @admin.id
         get :show, id: @project.id
         expect(response).to render_template('show')
@@ -68,7 +80,6 @@ describe ProjectsController do
   describe '#create' do
 
     before do
-      @user = create_user
       session[:user_id] = @user.id
     end
 
@@ -79,7 +90,8 @@ describe ProjectsController do
         }
       }
       post :create, project
-      expect(response).to redirect_to(project_tasks_path(Project.first))
+      project = Project.find_by(name: 'asdf')
+      expect(response).to redirect_to(project_tasks_path(project.id))
     end
 
     it 'renders new on unsuccessful save' do
@@ -95,27 +107,11 @@ describe ProjectsController do
   end
 
 
-
   describe '#edit' do
-
-    before do
-      @member = create_user
-      @owner = create_user
-      @project = create_project
-      @membership = create_membership(
-        user: @member,
-        project: @project,
-      )
-      @ownership = create_membership(
-        user: @owner,
-        project: @project,
-        status: 'owner'
-      )
-    end
 
     context 'invalid access attempts' do
       it 'renders 404 if not an owner' do
-        session[:user_id] = @member.id
+        session[:user_id] = @user.id
         get :edit, id: @project
         expect(response.status).to eq(404)
       end
@@ -134,32 +130,17 @@ describe ProjectsController do
         get :edit, id: @project.id
         expect(response).to render_template('edit')
       end
+
+      it 'renders edit view if you are an admin' do
+        session[:user_id] = @admin.id
+        get :edit, id: @project.id
+        expect(response).to render_template('edit')
+      end
     end
 
   end
 
   describe '#update' do
-
-    before do
-      @member = create_user
-      @owner = create_user
-      @project = create_project
-      @membership = create_membership(
-        user: @member,
-        project: @project,
-      )
-      @ownership = create_membership(
-        user: @owner,
-        project: @project,
-        status: 'owner'
-      )
-      @different = {
-        project: {
-          name: 'different'
-        },
-        id: @project.id
-      }
-    end
 
     context 'invalid attempts to edit' do
       it 'renders 404 if you a not associated' do
@@ -170,7 +151,7 @@ describe ProjectsController do
       end
 
       it 'renders 404 if you are a member' do
-        session[:user_id] = @member.id
+        session[:user_id] = @user.id
         put :update, @different
         expect(response.status).to eq(404)
       end
@@ -194,7 +175,6 @@ describe ProjectsController do
         expect(response).to redirect_to(project_path(Project.first))
       end
       it 'redirects to project path when admins update it' do
-        @admin = create_user(admin: true)
         session[:user_id] = @admin.id
         put :update, @different
         expect(response).to redirect_to(project_path(Project.first))
@@ -206,29 +186,33 @@ describe ProjectsController do
 
   describe 'destroy' do
 
-    before do
-      @user = create_user
-    end
-
     context 'invalid destroy attempts' do
-
       it 'renders 404 if member attempts to destroy' do
-
+        session[:user_id] = @user.id
+        delete :destroy, id: @project.id
+        expect(response.status).to eq(404)
       end
 
       it 'renders 404 if non-member attempts to destroy' do
+        foreign = create_user
+        session[:user_id] = foreign.id
+        delete :destroy, id: @project.id
+        expect(response.status).to eq(404)
       end
-
     end
 
     context 'valid destroy attempts' do
-
-      it 'redirects to users_path if owner destroys' do
+      it 'redirects to projects_path if owner destroys' do
+        session[:user_id] = @owner.id
+        delete :destroy, id: @project.id
+        expect(response).to redirect_to(projects_path)
       end
 
-      it 'redirects to users_path if admin destroys' do
+      it 'redirects to projects_path if admin destroys' do
+        session[:user_id] = @admin.id
+        delete :destroy, id: @project.id
+        expect(response).to redirect_to(projects_path)
       end
-
     end
 
   end

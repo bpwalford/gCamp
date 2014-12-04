@@ -41,6 +41,7 @@ class ProjectsController < ApplicationController
   end
 
   def destroy
+    @project.memberships.each {|m| m.valid_destroy = true && m.save}
     @project.destroy
     redirect_to projects_path, notice: 'Project was successfully deleted.'
   end
