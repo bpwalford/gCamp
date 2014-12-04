@@ -2,6 +2,7 @@ class CommentsController < ApplicationController
 
   def create
     @project = Project.find(params[:project_id])
+    check_user_projects
     @task = Task.find(params[:task_id])
     @comment = @task.comments.new(set_params)
     @comment.user = current_user
