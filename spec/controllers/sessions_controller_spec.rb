@@ -30,11 +30,11 @@ describe SessionsController do
           attempt: 'true',
           place: "/project/#{@project.id}"
         }
-      expect(response).to redirect_to("/project/#{@project.id}")
+      expect(response).to redirect_to("/project/#{@project.id}?attempt=true")
       expect(session[:user_id]).to eq(@user.id)
     end
 
-    it 'redirects to projects when attempted request was not accessible' do
+    it 'redirects to attempted destination even when request was not accessible' do
       post :create,
         session: {
           email: 'asdf@asdf.com',
@@ -42,7 +42,7 @@ describe SessionsController do
           attempt: 'true',
           place: "/project/#{@tcejorp.id}"
         }
-      expect(response).to redirect_to(projects_path)
+      expect(response).to redirect_to("/project/#{@tcejorp.id}?attempt=true")
       expect(session[:user_id]).to eq(@user.id)
     end
 
@@ -50,6 +50,14 @@ describe SessionsController do
 
 
   describe '#destroy' do
+
+    it 'redirects to home page and clears the session' do
+      session[:user_id] = @user.id
+      delete :destroy
+      expect(session[:user_id]).to eq(nil)
+      expect(response).to redirect_to(home_path)
+    end
+
   end
 
 end

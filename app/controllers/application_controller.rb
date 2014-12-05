@@ -10,7 +10,11 @@ class ApplicationController < ActionController::Base
   rescue_from AccessDenied, with: :four_o_four
 
   def four_o_four
-    render 'public/404', layout: false, status: 404
+    if params[:attempt] == 'true'
+      redirect_to projects_path
+    else
+      render 'public/404', layout: false, status: 404
+    end
   end
 
 end

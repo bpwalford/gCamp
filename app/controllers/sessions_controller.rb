@@ -1,7 +1,6 @@
 class SessionsController < PublicController
 
   def create
-    # binding.pry
     user = User.find_by(email: params[:session][:email].downcase)
 
     if user && user.authenticate(params[:session][:password])
@@ -9,7 +8,7 @@ class SessionsController < PublicController
       session[:user_id] = user.id
 
       if params[:session][:attempt] == 'true'
-        redirect_to params[:session][:place]
+        redirect_to params[:session][:place] + '?attempt=true'
       else
         redirect_to projects_path
       end
