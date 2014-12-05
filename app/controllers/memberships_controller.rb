@@ -1,6 +1,6 @@
 class MembershipsController < ApplicationController
   before_action :set_project, :check_user_projects
-  before_action :check_project_membership, only: [:create, :update, :destroy]
+  before_action :check_project_ownership, only: [:create, :update]
 
   def index
     @membership = @project.memberships.new
@@ -29,7 +29,11 @@ class MembershipsController < ApplicationController
   end
 
   def destroy
+
+    check_delete_permissions
+
     @membership = Membership.find(params[:id])
+
     if current_user == @membership.user
       @membership.destroy
       redirect_to projects_path, notice: "You have successfully eliminated your membership to #{@project.name}"
@@ -51,6 +55,15 @@ class MembershipsController < ApplicationController
 
   def set_project
     @project = Project.find(params[:project_id])
+  end
+
+  def check_delete_permissions
+    @membership = current_user.memberships.find_by(project: @project)
+    unless admin?
+      if !@membership || @membership.status == 'member'
+        raise AccessDenied unless @membership == Membership.find_by_id(params[:id])
+      end
+    end
   end
 
 end
