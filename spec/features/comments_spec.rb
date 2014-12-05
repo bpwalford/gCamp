@@ -4,22 +4,24 @@ feature "Comments" do
 
   before do
 
-    user = User.create!(
+    @user = create_user(
       first_name: "test",
       last_name: "testing",
       email: "test@example.com",
       password: "asdf",
       password_confirmation: "asdf"
     )
-
-    project = Project.create!(
-      name: "newProject"
+    @project = create_project(name: 'flarp')
+    create_membership(
+      user: @user,
+      project: @project
     )
-
-    task = project.tasks.create!(
-      description: "taskDescription",
+    @task = create_task(
+      project: @project,
+      description: 'taskDescription',
       due_date: Date.today + 1.year
     )
+
 
     visit home_path
     click_on "Sign In"
@@ -33,8 +35,9 @@ feature "Comments" do
 
   scenario "Users can add comments to tasks" do
 
-    click_on "Projects"
-    click_on "newProject"
+    within(".project-index") do
+      click_on "flarp"
+    end
     click_on "1 Task"
     click_on "taskDescription"
     fill_in "comment_content", with: "This is a comment by test testing"
@@ -50,8 +53,9 @@ feature "Comments" do
 
   scenario "User cannot create blank comments" do
 
-    click_on "Projects"
-    click_on "newProject"
+    within(".project-index") do
+      click_on "flarp"
+    end
     click_on "1 Task"
     click_on "taskDescription"
     click_on "Add Comment"
@@ -65,26 +69,34 @@ feature "Comments" do
   scenario "User cannot make comments if they are not signed in" do
 
     click_on "Sign Out"
-    click_on "Projects"
-    click_on "newProject"
-    click_on "1 Task"
-    click_on "taskDescription"
-    expect(page).to have_no_content("Add Comment")
+    visit projects_path
+    expect(page).to have_content('You must be logged in to access that action')
+    visit project_tasks_path(@project)
+    expect(page).to have_content('You must be logged in to access that action')
+    visit project_task_path(@project, @task)
+    expect(page).to have_content('You must be logged in to access that action')
 
   end
 
   scenario "User sees comments only when they are associated with the appropriate task" do
 
-    projectOther = Project.create!(
+
+
+    projectOther = create_project(
       name: "otherProject"
     )
     projectOther.tasks.create!(
       description: "different",
       due_date: Date.today + 1.year
     )
+    create_membership(
+      user: @user,
+      project: projectOther
+    )
 
-    click_on "Projects"
-    click_on "newProject"
+    within(".project-index") do
+      click_on "flarp"
+    end
     click_on "1 Task"
     click_on "taskDescription"
     fill_in "comment_content", with: "This is a comment by test testing"
@@ -95,7 +107,9 @@ feature "Comments" do
     within(".task-show") do
       click_on "Projects"
     end
-    click_on "otherProject"
+    within(".project-index") do
+      click_on "otherProject"
+    end
     click_on "1 Task"
     click_on "different"
     within(".task-comments") do
@@ -118,9 +132,9 @@ feature "Comments" do
       )
     end
 
-
-    click_on "Projects"
-    click_on "newProject"
+    within(".project-index") do
+      click_on "flarp"
+    end
     click_on "2 Tasks"
     expect(page).to have_content("10")
 

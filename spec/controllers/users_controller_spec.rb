@@ -2,6 +2,18 @@ require 'rails_helper'
 
 describe UsersController do
 
+  before do
+    @user = create_user
+    @different = {
+      user: {
+        first_name: 'different',
+        last_name: 'different',
+        email: @user.email,
+      },
+      id: @user.id
+    }
+  end
+
   describe '#index' do
 
     it 'renders index if a user is logged in' do
@@ -68,10 +80,6 @@ describe UsersController do
 
   describe 'edit' do
 
-    before do
-      @user = create_user
-    end
-
     context 'invalid edit page access' do
       it 'renders 404 if user is not user in question or admin' do
         session[:user_id] = @user.id
@@ -100,18 +108,6 @@ describe UsersController do
 
 
   describe 'update' do
-
-    before do
-      @user = create_user
-      @different = {
-        user: {
-          first_name: 'different',
-          last_name: 'different',
-          email: @user.email,
-        },
-        id: @user.id
-      }
-    end
 
     context 'invalid update attempts' do
       it 'renders a 404 is user does not have access' do
@@ -149,10 +145,6 @@ describe UsersController do
 
 
   describe 'destroy' do
-
-    before do
-      @user = create_user
-    end
 
     context 'invalid destroy attempts' do
       it 'renders 404 non user or admin access' do
