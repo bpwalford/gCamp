@@ -3,44 +3,40 @@ require "rails_helper"
 feature "tasks" do
 
   before do
-
-    Project.create!(
-      name: "testProject"
-    )
-
+    sign_in
   end
 
   scenario "user CRUD's a new task" do
 
-    # begin on home page
-    visit home_path
-
     # create a new task
-    click_on "Projects"
-    click_on "testProject"
+    within(".project-index") do
+      click_on "flarp"
+    end
     click_on "0 Tasks"
     click_on "Create Task"
-    fill_in "Description", with: "testing"
+    fill_in "Description", with: "this is a task"
     fill_in "Due date", with: "01-01-2999"
     click_on "Create Task"
 
     # verify task and attributes exist on show and index, and project index
     expect(page).to have_content("Task was successfully created.")
-    expect(page).to have_content("testing")
+    expect(page).to have_content("this is a task")
     expect(page).to have_content("01/01/99")
-    click_on "testing"
+    within(".breadcrumb") do
+      click_on "flarp"
+    end
     expect(page).to have_no_content("Task was successfully created.")
-    expect(page).to have_content("Complete: false")
-    expect(page).to have_content("01/01/99")
-    click_on "testProject"
     expect(page).to have_content("1 Task")
-    within(".footer-content") do
+    within(".breadcrumb") do
       click_on "Projects"
     end
     expect(page).to have_content("1")
 
     # edit task
-    click_on "1"
+    within(".project-index") do
+      click_on "flarp"
+    end
+    click_on "1 Task"
     click_on "Edit"
     fill_in "Description", with: "different"
     fill_in "Due date", with: "01-01-2013"
@@ -63,24 +59,19 @@ feature "tasks" do
     expect(page).to have_content("Task was successfully destroyed.")
     expect(page).to have_no_content("different")
     expect(page).to have_no_content("01/01/13")
-    click_on "test"
-    expect(page).to have_content("0 Tasks")
-    within(".footer-content") do
-      click_on "Projects"
+    within(".breadcrumb") do
+      click_on "flarp"
     end
-    expect(page).to have_content("0")
-
+    expect(page).to have_content("0 Tasks")
 
   end
 
   scenario "user creates invalid task" do
 
-    # begin at home page
-    visit home_path
-
     # attempt to create task
-    click_on "Projects"
-    click_on "testProject"
+    within(".project-index") do
+      click_on "flarp"
+    end
     click_on "0 Tasks"
     click_on "Create Task"
     click_on "Create Task"
@@ -92,12 +83,10 @@ feature "tasks" do
 
   scenario "user creates task due in past" do
 
-    # begin at home page
-    visit home_path
-
     # attempt to create task
-    click_on "Projects"
-    click_on "testProject"
+    within(".project-index") do
+      click_on "flarp"
+    end
     click_on "0 Tasks"
     click_on "Create Task"
     fill_in "Description", with: "test"
@@ -109,7 +98,7 @@ feature "tasks" do
 
   end
 
-  scenario "update user with due date in past" do
+  scenario "update task with due date in past" do
 
     # create test task
     task = Task.new(
@@ -119,12 +108,10 @@ feature "tasks" do
     task.project = Project.first
     task.save
 
-    # begin on home page
-    visit home_path
-
-    # update task
-    click_on "Projects"
-    click_on "1"
+    within(".project-index") do
+      click_on "flarp"
+    end
+    click_on "1 Task"
     click_on "Edit"
     fill_in "Due date", with: "01-01-2000"
     click_on "Update Task"
