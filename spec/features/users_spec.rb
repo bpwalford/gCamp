@@ -2,41 +2,44 @@ require "rails_helper"
 
 feature "tasks" do
 
-  scenario "user CRUD's a new user" do
+  before do
+    sign_in
+  end
 
-    # begin on home page
-    visit home_path
+  scenario "user creates's a new user" do
 
     # create a new user
     click_on "Users"
     click_on "Create User"
-    fill_in "First name", with: "test"
-    fill_in "Last name", with: "testing"
-    fill_in "Email", with: "test@example.com"
+    fill_in "First name", with: "flarp"
+    fill_in "Last name", with: "flarping"
+    fill_in "Email", with: "flarp@example.com"
     fill_in "Password", with: "1234"
     fill_in "Password confirmation", with: "1234"
     click_on "Create User"
 
     # verify user and attributes exist index
     expect(page).to have_content("User was successfully created")
-    expect(page).to have_content("test")
-    expect(page).to have_content("testing")
-    expect(page).to have_content("test@example.com")
+    expect(page).to have_content("flarp")
+    expect(page).to have_content("flarping")
 
     # verify user exist on show page
-    click_on "test testing"
+    click_on "flarp flarping"
     expect(page).to have_no_content("User was successfully created.")
-    expect(page).to have_content("First name: test")
-    expect(page).to have_content("Last name: testing")
-    expect(page).to have_content("Email: test@example.com")
+    expect(page).to have_content("First name: flarp")
+    expect(page).to have_content("Last name: flarping")
+
+  end
+
+  scenario "user edits self" do
+
+    visit user_path(User.first)
 
     # edit user
     click_on "Edit"
     fill_in "First name", with: "different"
     fill_in "Last name", with: "differenter"
     fill_in "Email", with: "different@example.com"
-    # fill_in "Password", with: "1234"
-    # fill_in "Password confirmation", with: "1234"
     click_on "Update User"
 
     # verify alterations were saved and exist on the index
@@ -46,16 +49,24 @@ feature "tasks" do
     expect(page).to have_content("different@example.com")
 
     # verify alerations are on show page
-    click_on "different differenter"
+    within(".users-index") do
+      click_on "different differenter"
+    end
     expect(page).to have_no_content("User was successfully updated.")
     expect(page).to have_content("First name: different")
     expect(page).to have_content("Last name: differenter")
     expect(page).to have_content("Email: different@example.com")
 
+  end
+
+  scenario "user deletes self" do
+
+    visit user_path(User.first)
+
     # delete user and verify deletion
     click_on "Edit"
     click_on "Destroy"
-    expect(page).to have_content("User was successfully deleted")
+    expect(page).to have_content("You have successfully deleted your account")
     expect(page).to have_no_content("different")
     expect(page).to have_no_content("differenter")
     expect(page).to have_no_content("different@example.com")
@@ -64,9 +75,6 @@ feature "tasks" do
   end
 
   scenario "attempt to create invalid user" do
-
-    # begin on home page
-    visit home_path
 
     # create invalid user
     click_on "Users"
@@ -83,16 +91,8 @@ feature "tasks" do
 
   scenario "user registers with already existing email" do
 
-    # create user with email
-    User.create!(
-      first_name: "test",
-      last_name: "testing",
-      email: "test@example.com",
-      password: "1234",
-      password_confirmation: "1234"
-    )
-
     # begin at home page
+    click_on "Sign Out"
     visit home_path
 
     # user registers with existing email

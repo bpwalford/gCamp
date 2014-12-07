@@ -36,6 +36,7 @@ class UsersController < ApplicationController
 
   def destroy
     if @user == current_user
+      @user.memberships.each{|m| m.valid_destroy = true}
       @user.destroy
       session.clear
       redirect_to signin_path, notice: 'You have successfully deleted your account'
