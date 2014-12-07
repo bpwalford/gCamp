@@ -70,6 +70,7 @@ module ObjectCreationMethods
     create_membership(
       user: user,
       project: project,
+      status: 'owner',
     )
     visit home_path
     click_on "Sign In"
