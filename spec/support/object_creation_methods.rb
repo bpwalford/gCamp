@@ -41,7 +41,7 @@ module ObjectCreationMethods
   def create_task(overrides = {})
     new_task(overrides).tap(&:save!)
   end
-  
+
 
   def new_membership(overrides = {})
     defaults = {
@@ -54,6 +54,30 @@ module ObjectCreationMethods
 
   def create_membership(overrides = {})
     new_membership(overrides).tap(&:save)
+  end
+
+  def sign_in
+    user = create_user(
+      first_name: 'floop',
+      last_name: 'testing',
+      password: 'asdf',
+      password_confirmation: 'asdf',
+      email: 'test@example.com',
+    )
+    project = create_project(
+      name: 'flarp'
+    )
+    create_membership(
+      user: user,
+      project: project,
+    )
+    visit home_path
+    click_on "Sign In"
+    fill_in "Email", with: "test@example.com"
+    fill_in "Password", with: "asdf"
+    within(".well") do
+      click_on "Sign In"
+    end
   end
 
 end
