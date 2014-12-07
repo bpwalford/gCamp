@@ -20,11 +20,20 @@ class MembershipsController < ApplicationController
   end
 
   def update
-    @membership = Membership.find(params[:id])
-    if @membership.update(set_params)
-      redirect_to project_memberships_path(@project), notice: @membership.user.full_name + ' was successfully updated.'
+    # make sure there is always at least one owner
+    if @project.memberships.where(status: 'owner').count < 2 && params[:membership][:status] != 'owner'
+      @memberships = @project.memberships.all
+      @membership = @project.memberships.new
+      flash[:error] = 'Projects much have at least one owner'
+      render :index
     else
-      redirect_to project_memberships_path(@project)
+      @membership = Membership.find(params[:id])
+      if @membership.update(set_params)
+        redirect_to project_memberships_path(@project), notice: @membership.user.full_name + ' was successfully updated.'
+      else
+        @memberships = @project.memberships.all
+        render :index
+      end
     end
   end
 
@@ -35,8 +44,12 @@ class MembershipsController < ApplicationController
     @membership = Membership.find(params[:id])
 
     if current_user == @membership.user
-      @membership.destroy
-      redirect_to projects_path, notice: "You have successfully eliminated your membership to #{@project.name}"
+      if @membership.destroy
+        redirect_to projects_path, notice: "You have successfully eliminated your membership to #{@project.name}"
+      else
+        @memberships = @project.memberships.all
+        render :index
+      end
     else
       if @membership.destroy
         redirect_to project_memberships_path(@project), notice: @membership.user.full_name + ' was removed successfully'

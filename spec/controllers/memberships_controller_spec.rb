@@ -123,13 +123,13 @@ describe MembershipsController do
       it 'renders index if owner save is unsuccessful' do
         session[:user_id] = @owner.id
         put :update, project_id: @project.id, id: @usership.id, membership: {status: 'flarp'}
-        expect(response).to redirect_to(project_memberships_path(@project))
+        expect(response).to render_template('index')
       end
 
       it 'renders index if admin save is unsuccessful' do
         session[:user_id] = @admin.id
         put :update, project_id: @project.id, id: @usership.id, membership: {status: 'flarp'}
-        expect(response).to redirect_to(project_memberships_path(@project))
+        expect(response).to render_template('index')
       end
 
       it 'redirects to index if owner save is successful' do

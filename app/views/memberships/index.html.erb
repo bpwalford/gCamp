@@ -8,6 +8,12 @@
     {:name => "#{@project.name}", :link => "/projects/#{@project.id}"},
     {:name => "Memberships", :link => "active"} ]) %>
 
+  <% if flash[:error] %>
+    <div class="alert alert-danger">
+      <%= flash[:error] %>
+    </div>
+  <% end %>
+
   <br>
 
   <%= if current_user.owner?(@project) || admin?

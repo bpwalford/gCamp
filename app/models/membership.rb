@@ -10,7 +10,8 @@ class Membership < ActiveRecord::Base
   before_destroy :check_user_count
 
   def check_user_count
-    if self.project.memberships.where(status: 'owner').count < 2 && self.status == 'owner'
+    memberships = self.project.memberships.where(status: 'owner')
+    if memberships.count < 2 && self.status == 'owner'
       errors.add(:projects, " must have one owner")
       false unless self.valid_destroy == true
     end

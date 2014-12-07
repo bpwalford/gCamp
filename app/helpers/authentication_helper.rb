@@ -34,7 +34,7 @@ module AuthenticationHelper
     @membership = current_user.memberships.find_by(project: @project)
     unless admin?
       if !@membership || @membership.status == 'member'
-        raise AccessDenied #unless @membership == Membership.find_by_id(params[:id])
+        raise AccessDenied
       end
     end
   end
