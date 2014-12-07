@@ -67,14 +67,14 @@ task2 = Task.create!(
   Comment.create!(
   task: task1,
   user: owner,
-  body: Faker::Lorem.sentence
+  content: Faker::Lorem.sentence
   )
 end
 
 Comment.create!(
   task: task2,
   user: member,
-  body: Faker::Lorem.sentence
+  content: Faker::Lorem.sentence
 )
 
 single_owner = Project.create!(name: 'Single Owner')

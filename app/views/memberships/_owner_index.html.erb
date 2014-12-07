@@ -63,7 +63,7 @@
             <%= f.submit "Update", class: "btn btn-primary pull-right" %>
           </div>
           <!-- remove member from project -->
-          <div class="delete-x">
+          <div class="col-md-4 delete-x">
             <% if @project.memberships.where(status: 'owner').count >= 2 %>
               <%= link_to( content_tag(:span, "", class: "glyphicon glyphicon-remove"),
                 project_membership_path(@project, member), method: :delete,
@@ -74,7 +74,7 @@
                   project_membership_path(@project, member), method: :delete,
                     data: {confirm: "Are you sure you want to remove #{member.user.first_name} from #{@project.name}?"}) %>
               <% else %>
-                <p>You are the last owner</p>
+                <%= "You are the last owner"  %>
               <% end %>
             <% end %>
           </div>
