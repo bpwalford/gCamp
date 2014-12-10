@@ -17,6 +17,10 @@ class ProjectsController < ApplicationController
   def show
   end
 
+  def tracker
+    @stories = PivotalTracker.new.get_stories(params[:tracker_id], current_user.tracker_token)
+  end
+
   def new
     @project = Project.new
   end

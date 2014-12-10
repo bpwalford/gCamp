@@ -5,22 +5,22 @@
       <h1 class="col-md-10"><%= @project.name %></h1>
       <div class="col-md-2 tasks-create-button">
         <% if current_user.owner?(@project) || admin?%>
-          <span class="pull-right">
-            <%= link_to 'Edit', edit_project_path(@project), class: "btn btn-info" %>
-          </span>
+        <span class="pull-right">
+          <%= link_to 'Edit', edit_project_path(@project), class: "btn btn-info" %>
+        </span>
         <% end %>
       </div>
     </div>
   </div>
 
   <%= crumbs([ {:name => "Projects", :link => "/projects"},
-               {:name => "#{@project.name}", :link => "active"} ]) %>
+    {:name => "#{@project.name}", :link => "active"} ]) %>
 
   <div>
     <% if @project.tasks.length == 1 %>
-      <%= link_to "1 Task", project_tasks_path(@project) %>
+  <%= link_to "1 Task", project_tasks_path(@project) %>
     <% else %>
-      <%= link_to @project.tasks.length.to_s + " Tasks", project_tasks_path(@project) %>
+  <%= link_to @project.tasks.length.to_s + " Tasks", project_tasks_path(@project) %>
     <% end %>
   </div>
 
@@ -28,9 +28,9 @@
 
   <div>
     <% if @project.memberships.length == 1 %>
-      <%= link_to "1 Member", project_memberships_path(@project) %>
+  <%= link_to "1 Member", project_memberships_path(@project) %>
     <% else %>
-      <%= link_to @project.memberships.length.to_s + " Members", project_memberships_path(@project) %>
+  <%= link_to @project.memberships.length.to_s + " Members", project_memberships_path(@project) %>
     <% end %>
   </div>
 
@@ -47,7 +47,7 @@
           <div class="row content">
             <p>
               Deleting the project will also delete <%= @project.memberships.length %> memberships,
-                <%= @project.tasks.length %> tasks and associated comments.
+              <%= @project.tasks.length %> tasks and associated comments.
             </p>
           </div>
           <br>

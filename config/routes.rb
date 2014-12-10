@@ -18,6 +18,9 @@ Rails.application.routes.draw do
 
   get "faq" => "faq#faq", as: :faqPage
 
+  get "tracker_project/:tracker_id" => "projects#tracker", as: :tracker_project
+
+
   get "signup" => "register#new", as: :signup
   post "signup" => "register#create", as: :register
   get "signin" => "sessions#new", as: :signin
