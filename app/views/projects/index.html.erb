@@ -38,29 +38,29 @@
     </tbody>
   </table>
 
-  <br><br>
+  <% if @tracker_projects %>
+    <div class="page-header row">
+      <h1 class="col-md-11">Pivotal Tracker Projects</h1>
+    </div>
 
-  <div class="page-header row">
-    <h1 class="col-md-11">Pivotal Tracker Projects</h1>
-  </div>
-
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Name</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @tracker_projects.each do |name, id| %>
+    <table class="table">
+      <thead>
         <tr>
-          <td>
-            <div class="pull-left tasks-td-top-buffer">
-              <%= link_to name, tracker_project_path(tracker_id: id, tracker_name: name) %>
-            </div>
-          </td>
+          <th>Name</th>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        <% @tracker_projects.each do |name, id| %>
+          <tr>
+            <td>
+              <div class="pull-left tasks-td-top-buffer">
+                <%= link_to name, tracker_project_path(tracker_id: id, tracker_name: name) %>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
 
 </div>

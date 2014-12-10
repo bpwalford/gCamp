@@ -10,8 +10,14 @@ class User < ActiveRecord::Base
   has_many :projects, through: :memberships
   has_many :comments, dependent: :nullify
 
+  before_save :token_nil_if_bank
+
   def full_name
     self.first_name + ' ' + self.last_name
+  end
+
+  def token_nil_if_bank
+    self.tracker_token = nil if self.tracker_token.blank?
   end
 
   def owner?(project)
