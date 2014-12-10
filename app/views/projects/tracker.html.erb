@@ -1,3 +1,29 @@
-<h1>stories</h1>
+<div class="tracker-stories">
 
-<%= @stories %>
+  <div class="page-header row">
+    <h1 class="col-md-10">Stories for <%= @project %></h1>
+    <h4 class="col-md-2 count">(showing first 500)</h4>
+  </div>
+
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Estimate</th>
+        <th>Labels</th>
+        <th>Current State</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @stories.each do |story| %>
+      <tr>
+        <td><%= story[:description] %></td>
+        <td><%= story[:estimate] %></td>
+        <td><%= story[:labels].join(', ') %></td>
+        <td><%= story[:current_state] %></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+</div>
