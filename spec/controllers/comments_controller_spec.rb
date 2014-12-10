@@ -6,21 +6,21 @@ describe CommentsController do
 
     before do
       @admin = create_user(admin: true)
-      @other = create_user
-      @project = create_project
-      @user = create_user
-      @membership = create_membership(
-      project: @project,
-      user: @user,
+        @other = create_user
+        @project = create_project
+        @user = create_user
+        @membership = create_membership(
+        project: @project,
+        user: @user,
       )
       @owner = create_user
       @ownership = create_membership(
-      project: @project,
-      user: @owner,
-      status: 'owner'
+        project: @project,
+        user: @owner,
+        status: 'owner'
       )
       @task = create_task(
-      project: @project
+        project: @project
       )
     end
 

@@ -20,7 +20,6 @@ class MembershipsController < ApplicationController
   end
 
   def update
-    # make sure there is always at least one owner
     if @project.memberships.where(status: 'owner').count < 2 && params[:membership][:status] != 'owner'
       @memberships = @project.memberships.all
       @membership = @project.memberships.new
