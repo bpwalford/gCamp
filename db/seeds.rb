@@ -33,6 +33,14 @@ user = User.create!(
   password: 'password'
 )
 
+me = User.create!(
+  first_name: 'asdf',
+  last_name: 'asdf',
+  email: 'asdf@asdf.com',
+  password: 'asdf',
+  tracker_token: '15996a007f02afa9b862e890de1b9f74'
+)
+
 multiple_owners = Project.create!(name: 'Multiple Owners')
 
 Membership.create!(

@@ -2,7 +2,7 @@
 
   <div class="page-header row">
 
-    <h1 class="col-md-11">Projects</h1>
+    <h1 class="col-md-11">My Projects</h1>
     <div class="col-md-1 tasks-create-button">
       <%= link_to 'Create Project', new_project_path, class: "btn btn-info pull-right" %>
     </div>
@@ -31,6 +31,31 @@
           <td>
             <div class="tasks-td-top-buffer">
               <%= link_to project.tasks.length, project_tasks_path(project) %>
+            </div>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <br><br>
+
+  <div class="page-header row">
+    <h1 class="col-md-11">Pivotal Tracker Projects</h1>
+  </div>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Name</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @tracker_projects.each do |name, id| %>
+        <tr>
+          <td>
+            <div class="pull-left tasks-td-top-buffer">
+              <%= name %>
             </div>
           </td>
         </tr>

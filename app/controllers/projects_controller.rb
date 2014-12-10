@@ -1,3 +1,5 @@
+require 'pivotal_tracker'
+
 class ProjectsController < ApplicationController
   before_action :set_project, only: [:show, :edit, :update, :destroy]
   before_action :check_user_projects, only: [:show, :destroy]
@@ -5,6 +7,11 @@ class ProjectsController < ApplicationController
 
   def index
     admin? ? @projects = Project.all : @projects = current_user.projects.all
+
+    if current_user.tracker_token
+      @tracker_projects = PivotalTracker.new.get_projects(current_user.tracker_token)
+    end
+
   end
 
   def show
