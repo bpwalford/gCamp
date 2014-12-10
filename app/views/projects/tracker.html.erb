@@ -17,7 +17,7 @@
     <tbody>
       <% @stories.each do |story| %>
       <tr>
-        <td><%= story[:description] %></td>
+        <td><%= link_to story[:description], "https://www.pivotaltracker.com/n/projects/1183326" %></td>
         <td><%= story[:estimate] %></td>
         <td><%= story[:labels].join(', ') %></td>
         <td><%= story[:current_state] %></td>
@@ -25,5 +25,6 @@
       <% end %>
     </tbody>
   </table>
+  <%= paginate @stories %>
 
 </div>

@@ -54,3 +54,5 @@ gem 'autoprefixer-rails'
 gem 'faker'
 
 gem 'faraday'
+
+gem 'kaminari'

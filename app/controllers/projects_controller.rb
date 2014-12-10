@@ -19,6 +19,7 @@ class ProjectsController < ApplicationController
 
   def tracker
     @stories = PivotalTracker.new.get_stories(params[:tracker_id], current_user.tracker_token)
+    @stories = Kaminari.paginate_array(@stories).page(params[:page])
     @project = params[:tracker_name]
   end
 
