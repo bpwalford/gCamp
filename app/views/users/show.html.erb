@@ -26,6 +26,10 @@
       <p class="col-md-2 user-info"><strong>Email:</strong></p>
       <p class="col-md-2"><%= mail_to @user.email %></p>
     </div>
+    <div class="row">
+      <p class="col-md-2 user-info"><strong>Pivotal Tracker Token:</strong></p>
+      <p class="col-md-2"><%= current_user.tracker_token[1..4] + '*'*20%></p>
+    </div>
   <% end %>
 
 </div>

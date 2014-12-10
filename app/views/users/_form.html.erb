@@ -36,6 +36,13 @@
     </div>
   <% end %>
 
+  <div class="field form-group row">
+      <%= f.label :pivotal_tracker_token, :class => "col-md-2" %>
+      <div class="col-md-4">
+        <%= f.password_field :tracker_token, :class => "form-control" %>
+      </div>
+  </div>
+
   <% if admin? %>
     <div class="field form-group row">
       <div class="col-md-offset-2 col-md-10">
