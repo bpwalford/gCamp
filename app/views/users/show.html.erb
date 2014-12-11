@@ -30,7 +30,6 @@
   <div class="row">
     <p class="col-md-2 user-info"><strong>Pivotal Tracker Token:</strong></p>
     <% if @user.tracker_token %>
-    <% binding.pry %>
       <p class="col-md-2"><%= @user.tracker_token[1..4] + '*'*20%></p>
     <% else %>
       <p class="col-md-2">(no pivotal tracker token)</p>
