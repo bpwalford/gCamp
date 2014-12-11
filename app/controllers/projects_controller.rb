@@ -1,5 +1,3 @@
-require 'pivotal_tracker'
-
 class ProjectsController < ApplicationController
   before_action :set_project, only: [:show, :edit, :update, :destroy]
   before_action :check_user_projects, only: [:show, :destroy]
