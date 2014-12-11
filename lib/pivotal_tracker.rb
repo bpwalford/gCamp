@@ -12,35 +12,12 @@ class PivotalTracker
   end
 
   def get_stories(project_id, token)
+    stories = multiple_query_requests('with_state=rejected', 'with_state=started', 'with_state=unstarted',
+      'with_state=finished', 'with_state=delivered', 'with_state=accepted', project_id, token)
 
-    data = []
-    data << send_request("/services/v5/projects/#{project_id}/stories?with_state=rejected", token)
-    data << send_request("/services/v5/projects/#{project_id}/stories?with_state=started", token)
-    data << send_request("/services/v5/projects/#{project_id}/stories?with_state=unstarted", token)
-    data << send_request("/services/v5/projects/#{project_id}/stories?with_state=finished", token)
-    data << send_request("/services/v5/projects/#{project_id}/stories?with_state=delivered", token)
-    data << send_request("/services/v5/projects/#{project_id}/stories?with_state=accepted", token)
+    stories = sort_stories(stories)
 
-    stories = []
-    data.each do |datum|
-      datum.each do |item|
-        story = {}
-        story[:description] = item[:name]
-        story[:estimate] = item[:estimate]
-        story[:current_state] = item[:current_state]
-
-        story[:labels] = []
-        item[:labels].each do |label|
-          story[:labels] << label[:name]
-        end
-
-        stories << story
-      end
-    end
-
-    while stories.length > 500
-      stories.pop
-    end
+    stories = trim_stories(stories)
 
     stories
   end
@@ -48,7 +25,6 @@ class PivotalTracker
   private
 
   def send_request(path, token)
-
     conn = Faraday.new(url: "https://www.pivotaltracker.com")
 
     response = conn.get do |req|
@@ -62,7 +38,41 @@ class PivotalTracker
     end
 
     response_json
+  end
 
+  def multiple_query_requests(*queries, project_id, token)
+    responses = []
+    queries.each do |query|
+      responses << send_request("/services/v5/projects/#{project_id}/stories?#{query}", token)
+    end
+    responses
+  end
+
+  def sort_stories(stories)
+    sorted = []
+
+    stories.each do |story|
+      story.each do |data|
+        sorted_story = {}
+
+        sorted_story[:description]   = data[:name]
+        sorted_story[:estimate]      = data[:estimate]
+        sorted_story[:current_state] = data[:current_state]
+        sorted_story[:labels]        = []
+        data[:labels].each{|l| sorted_story[:labels] << l[:name]}
+
+        sorted << sorted_story
+      end
+    end
+
+    sorted
+  end
+
+  def trim_stories(stories)
+    while stories.length > 500
+      stories.pop
+    end
+    stories
   end
 
 end
