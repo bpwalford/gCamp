@@ -1,4 +1,4 @@
-module AuthenticationHelper
+module AuthorizationHelper
 
   class AccessDenied < StandardError
   end
@@ -31,11 +31,18 @@ module AuthenticationHelper
   end
 
   def check_project_ownership
-    @membership = current_user.memberships.find_by(project: @project)
-    unless admin?
-      if !@membership || @membership.status == 'member'
-        raise AccessDenied
-      end
+    @user_membership = find_user_membership
+
+    if !@user_membership || @user_membership.status == 'member'
+      raise AccessDenied unless admin?
+    end
+  end
+
+  def check_membership_delete_permissions
+    @user_membership = find_user_membership
+
+    if !@user_membership || @user_membership.status == 'member'
+      raise AccessDenied unless current_users_membership? || admin?
     end
   end
 
@@ -48,6 +55,14 @@ module AuthenticationHelper
       end
       false
     end
+  end
+
+  def find_user_membership
+    current_user.memberships.find_by(project: @project)
+  end
+
+  def current_users_membership?
+    find_user_membership == Membership.find_by_id(params[:id])
   end
 
 end

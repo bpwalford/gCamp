@@ -1,11 +1,12 @@
 class MembershipsController < ApplicationController
   before_action :set_project, :check_user_projects
+  before_action :check_membership_delete_permissions, only: [:destroy]
   before_action :check_project_ownership, only: [:create, :update]
 
   def index
     @membership = @project.memberships.new
     @memberships = @project.memberships.all
-    @current_membership = current_user.memberships.find_by(project: @project)
+    @current_membership = find_user_membership
   end
 
   def create
@@ -23,7 +24,7 @@ class MembershipsController < ApplicationController
     if @project.memberships.where(status: 'owner').count < 2 && params[:membership][:status] != 'owner'
       @memberships = @project.memberships.all
       @membership = @project.memberships.new
-      flash[:error] = 'Projects much have at least one owner'
+      flash[:error] = 'Projects must have at least one owner'
       render :index
     else
       @membership = Membership.find(params[:id])
@@ -37,8 +38,6 @@ class MembershipsController < ApplicationController
   end
 
   def destroy
-
-    check_delete_permissions
 
     @membership = Membership.find(params[:id])
 
@@ -67,15 +66,6 @@ class MembershipsController < ApplicationController
 
   def set_project
     @project = Project.find(params[:project_id])
-  end
-
-  def check_delete_permissions
-    @membership = current_user.memberships.find_by(project: @project)
-    unless admin?
-      if !@membership || @membership.status == 'member'
-        raise AccessDenied unless @membership == Membership.find_by_id(params[:id])
-      end
-    end
   end
 
 end
