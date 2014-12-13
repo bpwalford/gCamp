@@ -10,26 +10,10 @@ class TasksController < ApplicationController
       @tasks = @project.tasks.where(complete: false).order(params[:tableSort])
     end
 
-    # @tasksCsv = Task.all
-    # respond_to do |format|
-    #   format.html
-    #   format.csv { send_data @tasksCsv.to_csv }
-    # end
-
-  end
-
-  def toggleCompletion
-
-    @task = @project.tasks.find(params[:currentId])
-
-    if @task.complete == false
-      @task.complete = true
-      @task.save
-      redirect_to tasks_path(sort: params[:sort], tableSort: params[:tableSort])
-    elsif @task.complete == true
-      @task.complete = false
-      @task.save
-      redirect_to tasks_path(sort: params[:sort], tableSort: params[:tableSort])
+    @tasksCsv = @project.tasks.all
+    respond_to do |format|
+      format.html
+      format.csv { send_data @tasksCsv.to_csv }
     end
 
   end

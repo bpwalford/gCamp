@@ -10,7 +10,7 @@
       </div>
       <div class="col-md-3 tasks-create-button">
         <span class="pull-right">
-          <%= link_to 'Download CSV', project_tasks_path(@project), format: "csv", class: "btn btn-info" %>
+          <%= link_to 'Download CSV', project_tasks_path(@project, format: "csv"), class: "btn btn-info" %>
           <%= link_to 'Create Task', new_project_task_path(@project), class: "btn btn-info" %>
         </span>
       </div>
@@ -45,16 +45,8 @@
             <div class="tasks-td-top-buffer">
               <%= if task.complete == false
                     content_tag(:span, "", class: "glyphicon glyphicon-unchecked", value: "delete")
-                    # link_to content_tag(:span, "", class: "glyphicon glyphicon-unchecked"),
-                    # toggleCompletion_path(@project), currentId: task.id, sort: params[:sort], tableSort: params[:tableSort],
-                    # class: "btn btn-default btn-sm"
-
                   elsif task.complete == true
                     content_tag(:span, "", class: "glyphicon glyphicon-check", value: "delete")
-                    # link_to content_tag(:span, "", class: "glyphicon glyphicon-check"),
-                    # toggleCompletion_path(@project), currentId: task.id, sort: params[:sort], tableSort: params[:tableSort],
-                    # class: "btn btn-default btn-sm"
-
                   end %>
             </div>
           </td>

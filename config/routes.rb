@@ -1,7 +1,5 @@
 Rails.application.routes.draw do
 
-  get 'tasks/toggleCompletion' => 'tasks#toggleCompletion', as: :toggleCompletion
-
   resources :users
   resources :projects do
     resources :tasks do
