@@ -38,23 +38,15 @@ class MembershipsController < ApplicationController
   end
 
   def destroy
-
     @membership = Membership.find(params[:id])
 
-    if current_user == @membership.user
-      if @membership.destroy
-        redirect_to projects_path, notice: "You have successfully eliminated your membership to #{@project.name}"
-      else
-        @memberships = @project.memberships.all
-        render :index
-      end
+    if @membership.destroy && current_user == @membership.user
+      redirect_to projects_path, notice: "You have successfully eliminated your membership to #{@project.name}"
+    elsif @membership.destroy
+      redirect_to project_memberships_path(@project), notice: @membership.user.full_name + ' was removed successfully'
     else
-      if @membership.destroy
-        redirect_to project_memberships_path(@project), notice: @membership.user.full_name + ' was removed successfully'
-      else
-        @memberships = @project.memberships.all
-        render :index
-      end
+      @memberships = @project.memberships.all
+      render :index
     end
   end
 
