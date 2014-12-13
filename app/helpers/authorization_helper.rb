@@ -3,6 +3,8 @@ module AuthorizationHelper
   class AccessDenied < StandardError
   end
 
+  # *********** user auth helpers *************
+
   def current_user
     User.find_by(id: session[:user_id])
   end
@@ -24,6 +26,16 @@ module AuthorizationHelper
     end
   end
 
+  def friend?(user)
+    if current_user.projects.count > 0
+      current_user.projects.each do |project|
+        project.users.include?(user) ? (return true) : (return false)
+      end
+    end
+  end
+
+  # *********** project auth helpers *************
+
   def check_user_projects
     if !current_user.projects.include?(@project)
       raise AccessDenied unless admin?
@@ -38,6 +50,8 @@ module AuthorizationHelper
     end
   end
 
+  # *********** membership auth helpers *************
+
   def check_membership_delete_permissions
     @user_membership = find_user_membership
 
@@ -46,16 +60,6 @@ module AuthorizationHelper
     end
   end
 
-  def friend?(user)
-    if current_user.projects.count > 0
-      current_user.projects.each do |project|
-        if project.users.include?(user)
-          return true
-        end
-      end
-      false
-    end
-  end
 
   def find_user_membership
     current_user.memberships.find_by(project: @project)
