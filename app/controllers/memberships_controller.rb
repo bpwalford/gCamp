@@ -1,7 +1,7 @@
 class MembershipsController < ApplicationController
   before_action :set_project, :check_user_projects
-  before_action :check_membership_delete_permissions, only: [:destroy]
   before_action :check_project_ownership, only: [:create, :update]
+  before_action :check_membership_delete_permissions, only: [:destroy]
 
   def index
     @membership = @project.memberships.new
@@ -11,29 +11,26 @@ class MembershipsController < ApplicationController
 
   def create
     @membership = @project.memberships.new(set_params)
+    @memberships = @project.memberships.all
 
     if @membership.save
       redirect_to project_memberships_path(@project), notice: @membership.user.full_name + ' successfully added to project.'
     else
-      @memberships = @project.memberships.all
       render :index
     end
   end
 
   def update
-    if @project.memberships.where(status: 'owner').count < 2 && params[:membership][:status] != 'owner'
-      @memberships = @project.memberships.all
-      @membership = @project.memberships.new
+    @membership = Membership.find(params[:id])
+    @memberships = @project.memberships.all
+
+    if last_owner?
       flash[:error] = 'Projects must have at least one owner'
       render :index
+    elsif @membership.update(set_params)
+      redirect_to project_memberships_path(@project), notice: @membership.user.full_name + ' was successfully updated.'
     else
-      @membership = Membership.find(params[:id])
-      if @membership.update(set_params)
-        redirect_to project_memberships_path(@project), notice: @membership.user.full_name + ' was successfully updated.'
-      else
-        @memberships = @project.memberships.all
-        render :index
-      end
+      render :index
     end
   end
 

@@ -60,6 +60,12 @@ module AuthorizationHelper
     end
   end
 
+  def last_owner?
+    owner_count = @project.memberships.where(status: 'owner').count
+    status_param = params[:membership][:status]
+
+    owner_count < 2 && status_param != 'owner' ? true : false
+  end
 
   def find_user_membership
     current_user.memberships.find_by(project: @project)
