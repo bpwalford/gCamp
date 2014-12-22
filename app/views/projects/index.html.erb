@@ -1,13 +1,10 @@
 <div class="project-index">
 
-  <div class="page-header row">
 
-    <h1 class="col-md-11">My Projects</h1>
-    <div class="col-md-1 tasks-create-button">
-      <%= link_to 'Create Project', new_project_path, class: "btn btn-info pull-right" %>
-    </div>
+  <%= page_header2 "Projects" do %>
+    <%= link_to 'Create Project', new_project_path, class: "btn btn-info" %>
+  <% end %>
 
-  </div>
 
   <table class="table">
     <thead>
